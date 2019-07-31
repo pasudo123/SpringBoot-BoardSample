@@ -32,4 +32,14 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    /** swagger **/
+    /** https://www.tutorialspoint.com/spring_boot/spring_boot_enabling_swagger2 **/
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+    /** swagger end **/
+
+    /** model-mapper **/
+    compile 'org.modelmapper:modelmapper:2.3.0'
+    /** model-mapper end **/
 }
