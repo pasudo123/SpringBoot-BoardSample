@@ -15,6 +15,11 @@ export default new VueRouter({
             component: Home,
             children: [
                 {
+                    path: `test`,
+                    name: `testView`,
+                    component: () => import(`@/views/TestView`)
+                },
+                {
                     path: '',
                     name: 'articleList',
                     component: () => import('@/views/ArticleList')
