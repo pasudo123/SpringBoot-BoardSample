@@ -21,10 +21,7 @@ public class ArticleOneResponseDto {
     private String title;
     private ArticleType articleType;
     private String content;
-    private LocalDateTime registrationDateTime;
     private LocalDate registrationDate;
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
 
     // TODO - Article 에 대한 CommentDto 추가하기
 
@@ -33,9 +30,6 @@ public class ArticleOneResponseDto {
         this.title = article.getTitle();
         this.articleType = article.getArticleType();
         this.content = article.getContent();
-        this.registrationDateTime = article.getRegistrationDateTime();
         this.registrationDate = article.getRegistrationDate();
-        this.createdDate = article.getCreatedDate();
-        this.modifiedDate = article.getModifiedDate();
     }
 }

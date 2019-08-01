@@ -1,5 +1,6 @@
 package edu.pasudo123.board.core.article.api;
 
+import edu.pasudo123.board.core.article.dto.ArticleOneDto;
 import edu.pasudo123.board.core.article.dto.ArticleOneResponseDto;
 import edu.pasudo123.board.core.article.dto.ArticleResponseDto;
 import edu.pasudo123.board.core.article.dto.ArticleSaveRequestDto;
@@ -40,5 +41,20 @@ public class ArticleController {
     public ResponseEntity<ArticleOneResponseDto> findOneById(@PathVariable Long articleId){
 
         return ResponseEntity.ok().body(articleService.findOneById(articleId));
+    }
+
+    @PatchMapping("article/{articleId}")
+    public ResponseEntity<?> updateOneById(@PathVariable Long articleId,
+                                           @RequestBody ArticleOneDto dto){
+
+        return ResponseEntity.ok().body(articleService.updateOneById(articleId, dto));
+    }
+
+    @DeleteMapping("article/{articleId}")
+    public ResponseEntity<?> deleteOneById(@PathVariable Long articleId){
+
+        articleService.deleteOneById(articleId);
+
+        return ResponseEntity.ok().body("Success");
     }
 }

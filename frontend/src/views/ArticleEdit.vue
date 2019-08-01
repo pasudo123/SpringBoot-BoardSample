@@ -28,7 +28,7 @@
                                 <div>
                                     <v-text-field
                                             @keypress.enter.prevent
-                                            v-model="article.title"
+                                            v-model="articleEdit.title"
                                             label="제목"
                                     ></v-text-field>
                                 </div>
@@ -37,13 +37,14 @@
                             <VueTrix
                                     style="min-height: 250px;"
                                     height="250px"
-                                    v-model="article.content"
+                                    v-model="articleEdit.content"
                                     placeholder="내용 작성"/>
 
                             <div class="buttonWrapper">
-                                <button @click="cancel()" class="customButton">취소</button>
+                                <button @click="cancel" class="customButton">취소</button>
                                 <v-spacer></v-spacer>
-                                <button @click="submit()" class="customButton">작성</button>
+                                <button v-if="!isUpdate" @click="submit" class="customButton">작성</button>
+                                <button v-else @click="submit" class="customButton">업데이트</button>
                             </div>
                         </div>
                     </v-flex>
@@ -55,15 +56,19 @@
 
 <script>
 
-    import {mapActions} from 'vuex'
+    import {mapActions, mapGetters, mapMutations} from 'vuex'
     import VueTrix from 'vue-trix'
 
     export default {
         name: "Article",
         components: {VueTrix},
+        computed: {
+            ...mapGetters(['article', 'isUpdate'])
+        },
         data() {
+
             return {
-                article: {type: '', title: '', content: '',},
+                articleEdit: {type: '', title: '', content: '',},
                 select: {name:'일상', type:'LIFE'},
                 types: [
                     {name:'일상', type:'LIFE'},
@@ -82,18 +87,28 @@
             submit() {
 
                 const payload = {
-                    title: this.article.title,
+                    title: this.articleEdit.title,
                     articleType: (this.select.type === "LIFE") ? "LIFE" : this.select,
-                    content: this.article.content
+                    content: this.articleEdit.content
                 };
 
-                this.createArticle(payload).then((data) => {
-                    this.routingHome();
-                })
+                if (!isUpdate){
+                    this.createArticle(payload).then((data) => {
+                        this.routingHome();
+                    });
+                } else {
+
+                }
+
             },
 
             routingHome() {
                 this.$router.push({path: '/'});
+            }
+        },
+        created() {
+            if (this.isUpdate === true){
+                this.articleEdit = this.article;
             }
         }
     }

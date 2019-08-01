@@ -3,7 +3,7 @@ import instance from '@/config/request'
 const state = {
     article: {},
     articleList: [],
-
+    isUpdate: false
 };
 
 const actions = {
@@ -12,7 +12,6 @@ const actions = {
             instance.post('/api/article', payload).then((response) => {
                 resolve(response.data);
             }).catch((error) => {
-                console.error(error);
                 reject(error);
             })
         });
@@ -27,28 +26,43 @@ const actions = {
         };
 
         return new Promise((resolve, reject) => {
-
-            /** 객체 프로퍼티 축약형으로 가능 **/
-            instance.get('/api/article', {params: params}).then((response) => {
+            instance.get('/api/article', {params}).then((response) => {
                 commit('setArticleList', response.data.content);
                 resolve(response.data);
             }).catch((error) => {
-                console.error(error);
+                console.error(`전체 아티클 조회 시 에러 발생 : ${error}`);
             })
         });
     },
 
     fetchOneArticle({commit}, id){
 
-        const requestUri = `/api/article/${id}`
+        const requestUri = `/api/article/${id}`;
 
         return new Promise((resolve, reject) => {
             instance.get(requestUri).then((response) => {
                 commit('setOneArticle', response.data);
                 resolve();
             }).catch((error) => {
-                console.error(error);
-            })
+                console.debug(`하나의 아티클 조회 시 에러 발생 : ${error}`);
+                reject(error);
+            });
+        });
+    },
+
+    deleteOneArticle({commit, state}){
+
+        const id = state.article.id;
+        const requestUri = `/api/article/${id}`;
+
+        return new Promise((resolve, reject) => {
+            instance.delete(requestUri).then((response) => {
+                commit(`cleanOneArticle`);
+                resolve();
+            }).catch((error) => {
+                console.debug(`하나의 아티클 삭제 시 에러 발생 : ${error}`);
+                reject(error);
+            });
         });
     }
 };
@@ -62,14 +76,24 @@ const mutations = {
         state.article = article;
     },
 
-    cleanUp(state){
+    cleanOneArticle(state) {
+        state.article = {};
+    },
+
+    cleanAllArticle(state) {
         state.articleList = [];
+    },
+
+    toggleIsUpdate(state){
+        state.isUpdate = !state.isUpdate;
     }
+
 };
 
 const getters = {
     articleList: state => state.articleList,
     article: state => state.article,
+    isUpdate: state => state.isUpdate,
 };
 
 export default {

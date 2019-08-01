@@ -28,6 +28,12 @@
                             </div>
                         </div>
 
+                        <div class="buttonWrapper">
+                            <button @click="updateProcess" class="updateButton">Update</button>
+
+                            <button @click="deleteProcess" class="deleteButton">Delete</button>
+                        </div>
+
                         <div class="commentWrapper">
                             <v-text-field
                                     color="blue"
@@ -46,7 +52,7 @@
 
 <script>
 
-    import {mapGetters} from 'vuex'
+    import {mapActions, mapGetters, mapMutations} from 'vuex'
 
     export default {
         name: "ArticleView",
@@ -60,6 +66,8 @@
             ...mapGetters(['article'])
         },
         methods: {
+            ...mapMutations(['toggleIsUpdate']),
+            ...mapActions(['deleteOneArticle']),
 
             parseType(type) {
                 if (type === 'LIFE') {
@@ -73,6 +81,17 @@
 
             goList() {
                 this.$router.push({name: 'articleList'});
+            },
+
+            updateProcess() {
+                this.toggleIsUpdate();
+                this.$router.push({name: `articleEdit`})
+            },
+
+            deleteProcess() {
+                this.deleteOneArticle().then(() => {
+                    this.goList();
+                })
             }
         },
         created() {
@@ -132,18 +151,6 @@
         margin-bottom: 20px;
     }
 
-    .writeLink {
-        color: white;
-        background-color: green;
-        text-decoration: none;
-        border-radius: 5px;
-        padding: 5px;
-    }
-
-    .writeLink:hover {
-        background-color: #006e00;
-    }
-
     button.customButton {
         color: white;
         background-color: green;
@@ -154,5 +161,31 @@
 
     button.customButton:hover {
         background-color: #006e00;
+    }
+
+    button.updateButton {
+        color: white;
+        background-color: #3d4692;
+        text-decoration: none;
+        border-radius: 5px;
+        padding: 8px 12px 8px 12px;
+        margin: 5px 15px 0 15px;
+    }
+
+    button.updateButton:hover {
+        background-color: #313692;
+    }
+
+    button.deleteButton {
+        color: white;
+        background-color: #803b33;
+        text-decoration: none;
+        border-radius: 5px;
+        padding: 8px 12px 8px 12px;
+        margin: 5px 0 0 0;
+    }
+
+    button.deleteButton:hover {
+        background-color: #6f2b29;
     }
 </style>

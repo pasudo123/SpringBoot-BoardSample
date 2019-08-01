@@ -1,5 +1,6 @@
 package edu.pasudo123.board.core.article.service;
 
+import edu.pasudo123.board.core.article.dto.ArticleOneDto;
 import edu.pasudo123.board.core.article.dto.ArticleOneResponseDto;
 import edu.pasudo123.board.core.article.dto.ArticleResponseDto;
 import edu.pasudo123.board.core.article.dto.ArticleSaveRequestDto;
@@ -49,5 +50,23 @@ public class ArticleService {
         Article article = articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException("해당 게시글은 존재하지 않습니다."));
 
         return new ArticleOneResponseDto(article);
+    }
+
+    @Transactional
+    public ArticleOneResponseDto updateOneById(final long articleId, ArticleOneDto dto){
+
+        Article article = articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException("해당 게시글은 존재하지 않습니다."));
+        article.updateArticle(dto);
+        articleRepository.save(article);
+
+        return new ArticleOneResponseDto(article);
+    }
+
+    @Transactional
+    public void deleteOneById(final long articleId){
+
+        articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException("해당 게시글은 존재하지 않습니다."));
+        articleRepository.deleteById(articleId);
+
     }
 }
