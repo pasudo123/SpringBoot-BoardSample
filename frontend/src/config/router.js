@@ -22,22 +22,22 @@ export default new VueRouter({
                 {
                     path: `test`,
                     name: `testView`,
-                    component: () => import(`@/views/TestView`)
+                    component: () => import(`@/pages/TestView`)
                 },
                 {
                     path: '',
                     name: 'articleList',
-                    component: () => import('@/views/article/ArticleList')
+                    component: () => import('@/pages/article/ArticleList')
                 },
                 {
                     path: 'article-edit',
                     name: 'articleEdit',
-                    component: () => import('@/views/article/ArticleEdit')
+                    component: () => import('@/pages/article/ArticleEdit')
                 },
                 {
                     path: 'article-view',
                     name: 'articleView',
-                    component: () => import('@/views/article/ArticleView')
+                    component: () => import('@/pages/article/ArticleView')
                 }
             ]
         },

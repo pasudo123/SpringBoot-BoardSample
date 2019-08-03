@@ -22,5 +22,14 @@ module.exports = {
                 '@': resolve('src')
             }
         }
+    },
+
+    pages: {
+        'login': {
+            entry: ''
+        },
+        'home': {
+
+        }
     }
 };
