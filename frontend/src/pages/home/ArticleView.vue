@@ -88,7 +88,7 @@
             },
 
             goList() {
-                this.$router.push({name: 'articleList'});
+                this.$router.push({name: 'home'});
             },
 
             updateProcess() {

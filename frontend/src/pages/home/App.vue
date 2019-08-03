@@ -1,5 +1,5 @@
 <template>
-    <div id="home">
+    <div id="app">
         <Header/>
         <router-view></router-view>
         <Footer/>
@@ -12,9 +12,9 @@
     import Footer from '@/components/Footer'
 
     export default {
-        name: "Home",
-        components: {Header, Footer}
-    }
+        name: "App",
+        components: {Header, Footer},
+    };
 </script>
 
 <style scoped>

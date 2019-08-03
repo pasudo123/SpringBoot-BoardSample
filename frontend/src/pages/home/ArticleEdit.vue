@@ -60,8 +60,7 @@
     import VueTrix from 'vue-trix'
 
     export default {
-        name: "Article",
-        components: {VueTrix},
+        name: "ArticleEdit",
         computed: {
             ...mapGetters(`articleModule`, {
                 article: `article`,
@@ -72,11 +71,11 @@
 
             return {
                 articleEdit: {type: '', title: '', content: '',},
-                select: {name:'일상', type:'LIFE'},
+                select: {name: '일상', type: 'LIFE'},
                 types: [
-                    {name:'일상', type:'LIFE'},
-                    {name:'영화', type:'MOVIE'},
-                    {name:'음악', type:'MUSIC'},
+                    {name: '일상', type: 'LIFE'},
+                    {name: '영화', type: 'MOVIE'},
+                    {name: '음악', type: 'MUSIC'},
                 ],
             }
         },
@@ -90,8 +89,8 @@
                 `toggleIsUpdate`, `fetchOneArticle`
             ]),
 
-            offUpdate(){
-                if (this.isUpdate){
+            offUpdate() {
+                if (this.isUpdate) {
                     this.toggleIsUpdate();
                 }
             },
@@ -116,7 +115,7 @@
             update() {
                 const payload = {
                     title: this.articleEdit.title,
-                    articleType: this.select,
+                    articleType: (this.select.type === undefined) ? this.select : this.select.type,
                     content: this.articleEdit.content
                 };
 
@@ -127,20 +126,20 @@
 
             routingHome() {
                 this.offUpdate();
-                this.$router.push({path: '/'});
+                this.$router.push({name: 'home'});
             },
         },
         created() {
-            if (this.isUpdate === true){
+            if (this.isUpdate === true) {
 
                 this.articleEdit = this.article;
 
-                if (this.article.articleType === `LIFE`){
+                if (this.article.articleType === `LIFE`) {
                     this.select = this.types[0];
                     return;
                 }
 
-                if (this.article.articleType === `MOVIE`){
+                if (this.article.articleType === `MOVIE`) {
                     this.select = this.types[1];
                     return;
                 }

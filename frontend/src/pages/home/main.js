@@ -1,5 +1,6 @@
+
 import Vue from 'vue'
-import App from '@/App.vue'
+import App from '@/pages/home/App.vue'
 import router from '@/config/router'
 import store from '@/store/store'
 import Vuetify from 'vuetify'
@@ -18,7 +19,7 @@ Vue.filter("error", ErrorFilter);
 import '@/style/global.css'
 
 new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app')
+    router,
+    store,
+    render: h => h (App)
+}).$mount('#app');

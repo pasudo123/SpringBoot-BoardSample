@@ -1,6 +1,6 @@
 
 import Vue from 'vue'
-import Login from '@/pages/login/Login'
+import Login from '@/pages/login/Login.vue'
 import router from '@/config/router'
 import store from '@/store/store'
 import Vuetify from 'vuetify'
@@ -22,4 +22,4 @@ new Vue({
     router,
     store,
     render: h => h (Login)
-}).$mount('#login');
+}).$mount('#app');

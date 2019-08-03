@@ -1,10 +1,10 @@
-
 ---
+## DB
 spring:
-
   h2:
     console:
       enabled: true
+
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -16,3 +16,15 @@ spring:
         format_sql: true
 
 ---
+## view freemarker
+spring:
+  freemarker:
+    template-loader-path: classpath:/static/templates
+    suffix: .ftl
+
+---
+## loggin
+logging:
+  level:
+#    org.springframework.web: DEBUG
+    edu.pasudo123.board: DEBUG

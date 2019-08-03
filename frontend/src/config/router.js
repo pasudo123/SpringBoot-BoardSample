@@ -1,8 +1,6 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
 
-import Login from '@/views/login/Login'
-import Home from '@/views/article/Home'
+import Vue from "vue"
+import VueRouter from "vue-router"
 
 Vue.use(VueRouter);
 
@@ -12,36 +10,28 @@ export default new VueRouter({
 
     routes: [
         {
-            path: '/login',
-            component: Login
+            path: "*",
+            redirect: 'login'
         },
         {
-            path: '/',
-            component: Home,
-            children: [
-                {
-                    path: `test`,
-                    name: `testView`,
-                    component: () => import(`@/pages/TestView`)
-                },
-                {
-                    path: '',
-                    name: 'articleList',
-                    component: () => import('@/pages/article/ArticleList')
-                },
-                {
-                    path: 'article-edit',
-                    name: 'articleEdit',
-                    component: () => import('@/pages/article/ArticleEdit')
-                },
-                {
-                    path: 'article-view',
-                    name: 'articleView',
-                    component: () => import('@/pages/article/ArticleView')
-                }
-            ]
+            path: "login",
+            name: "login",
+            component: () => import("@/pages/login/Login")
         },
-        /** 그 이외 모든 경로들 **/
-        { path: '*', redirect: '/' }
+        {
+            path: "/home",
+            name: "home",
+            component: () => import("@/pages/home/Article"),
+        },
+        {
+            path: "/article-edit",
+            name: "articleEdit",
+            component: () => import("@/pages/home/ArticleEdit"),
+        },
+        {
+            path: "/article-view",
+            name: "articleView",
+            component: () => import("@/pages/home/ArticleView"),
+        },
     ]
 });

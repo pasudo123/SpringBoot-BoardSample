@@ -1,6 +1,5 @@
 <template>
     <div id="articleList">
-
         <div class="settingWrapper">
             <router-link
                     :to="{ name: 'articleEdit' }"
@@ -85,7 +84,7 @@
                 `fetchAllArticle`, `fetchOneArticle`
             ]),
 
-            into(article){
+            into(article) {
                 this.fetchOneArticle(article.id).then((response) => {
                     this.$router.push({name: 'articleView'});
                 });
@@ -95,7 +94,7 @@
                 this.fetchPagination(page);
             },
 
-            fetchPagination(page){
+            fetchPagination(page) {
                 this.loading = true;
                 this.fetchAllArticle(page).then((data) => {
                     this.pagination.pages = data.totalPages;
@@ -117,7 +116,7 @@
         text-align: right;
     }
 
-    div.loadingWrapper{
+    div.loadingWrapper {
         margin-top: 200px;
         text-align: center;
     }
