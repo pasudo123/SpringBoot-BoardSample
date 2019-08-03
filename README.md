@@ -1,3 +1,5 @@
+# 스프링부트로 간단 게시판 구현
+[![HitCount](http://hits.dwyl.io/pasudo123/https://githubcom/pasudo123/SpringBoot-BoardSample.svg)](http://hits.dwyl.io/pasudo123/https://githubcom/pasudo123/SpringBoot-BoardSample)
 
 
 ### 라이브러리
