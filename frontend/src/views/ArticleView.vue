@@ -63,11 +63,19 @@
             }
         },
         computed: {
-            ...mapGetters(['article'])
+            ...mapGetters(`articleModule`, {
+                article: `article`,
+            })
         },
         methods: {
-            ...mapMutations(['toggleIsUpdate']),
-            ...mapActions(['deleteOneArticle']),
+
+            ...mapActions(`articleModule`, [
+                'deleteOneArticle'
+            ]),
+
+            ...mapMutations(`articleModule`, [
+                `toggleIsUpdate`
+            ]),
 
             parseType(type) {
                 if (type === 'LIFE') {

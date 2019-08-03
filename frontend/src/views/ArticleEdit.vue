@@ -44,7 +44,7 @@
                                 <button @click="cancel" class="customButton">취소</button>
                                 <v-spacer></v-spacer>
                                 <button v-if="!isUpdate" @click="submit" class="customButton">작성</button>
-                                <button v-else @click="submit" class="customButton">업데이트</button>
+                                <button v-else @click="update" class="customButton">업데이트</button>
                             </div>
                         </div>
                     </v-flex>
@@ -63,7 +63,10 @@
         name: "Article",
         components: {VueTrix},
         computed: {
-            ...mapGetters(['article', 'isUpdate'])
+            ...mapGetters(`articleModule`, {
+                article: `article`,
+                isUpdate: `isUpdate`
+            })
         },
         data() {
 
@@ -78,37 +81,70 @@
             }
         },
         methods: {
-            ...mapActions(['createArticle']),
+
+            ...mapActions(`articleModule`, [
+                'createArticle', `updateOneArticle`
+            ]),
+
+            ...mapMutations(`articleModule`, [
+                `toggleIsUpdate`, `fetchOneArticle`
+            ]),
+
+            offUpdate(){
+                if (this.isUpdate){
+                    this.toggleIsUpdate();
+                }
+            },
 
             cancel() {
+                this.offUpdate();
                 this.routingHome();
             },
 
             submit() {
-
                 const payload = {
                     title: this.articleEdit.title,
                     articleType: (this.select.type === "LIFE") ? "LIFE" : this.select,
                     content: this.articleEdit.content
                 };
 
-                if (!isUpdate){
-                    this.createArticle(payload).then((data) => {
-                        this.routingHome();
-                    });
-                } else {
+                this.createArticle(payload).then((data) => {
+                    this.routingHome();
+                });
+            },
 
-                }
+            update() {
+                const payload = {
+                    title: this.articleEdit.title,
+                    articleType: this.select,
+                    content: this.articleEdit.content
+                };
 
+                this.updateOneArticle(payload).then((data) => {
+                    this.routingHome();
+                });
             },
 
             routingHome() {
+                this.offUpdate();
                 this.$router.push({path: '/'});
-            }
+            },
         },
         created() {
             if (this.isUpdate === true){
+
                 this.articleEdit = this.article;
+
+                if (this.article.articleType === `LIFE`){
+                    this.select = this.types[0];
+                    return;
+                }
+
+                if (this.article.articleType === `MOVIE`){
+                    this.select = this.types[1];
+                    return;
+                }
+                this.select = this.types[2];
             }
         }
     }

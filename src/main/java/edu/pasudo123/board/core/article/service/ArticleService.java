@@ -59,7 +59,7 @@ public class ArticleService {
         article.updateArticle(dto);
         articleRepository.save(article);
 
-        return new ArticleOneResponseDto(article);
+            return new ArticleOneResponseDto(article);
     }
 
     @Transactional

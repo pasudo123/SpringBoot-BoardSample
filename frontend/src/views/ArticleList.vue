@@ -62,6 +62,7 @@
 
 <script>
 
+    import * as Cookies from 'js-cookie'
     import {mapActions, mapGetters} from 'vuex'
 
     export default {
@@ -74,10 +75,15 @@
             }
         },
         computed: {
-            ...mapGetters(['articleList']),
+            ...mapGetters(`articleModule`, {
+                articleList: `articleList`,
+            })
         },
         methods: {
-            ...mapActions(['fetchAllArticle', 'fetchOneArticle']),
+
+            ...mapActions(`articleModule`, [
+                `fetchAllArticle`, `fetchOneArticle`
+            ]),
 
             into(article){
                 this.fetchOneArticle(article.id).then((response) => {
