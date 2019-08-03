@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from '@/views/Home'
+import Login from '@/views/login/Login'
+import Home from '@/views/article/Home'
 
 Vue.use(VueRouter);
 
@@ -10,6 +11,10 @@ export default new VueRouter({
     mode: 'history',
 
     routes: [
+        {
+            path: '/login',
+            component: Login
+        },
         {
             path: '/',
             component: Home,
@@ -22,19 +27,21 @@ export default new VueRouter({
                 {
                     path: '',
                     name: 'articleList',
-                    component: () => import('@/views/ArticleList')
+                    component: () => import('@/views/article/ArticleList')
                 },
                 {
                     path: 'article-edit',
                     name: 'articleEdit',
-                    component: () => import('@/views/ArticleEdit')
+                    component: () => import('@/views/article/ArticleEdit')
                 },
                 {
                     path: 'article-view',
                     name: 'articleView',
-                    component: () => import('@/views/ArticleView')
+                    component: () => import('@/views/article/ArticleView')
                 }
             ]
         },
+        /** 그 이외 모든 경로들 **/
+        { path: '*', redirect: '/' }
     ]
 });
