@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import articleModule from '@/store/modules/article.module'
+import commentModule from '@/store/modules/comment.module'
 import * as Cookies from 'js-cookie'
 
 import createPersistedState from 'vuex-persistedstate'
@@ -17,12 +18,11 @@ export default new Vuex.Store({
     plugins: [
         createPersistedState({
             paths:[`articleModule`],
-            // getState: (key) => Cookies.getJSON(key),
-            // setState: (key, state) => Cookies.set(key, state, {expires:3, secure: true})
         })
     ],
 
     modules: {
         articleModule,
+        commentModule,
     }
 });

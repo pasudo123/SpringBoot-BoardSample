@@ -2,7 +2,7 @@ package edu.pasudo123.board.core.article.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import edu.pasudo123.board.core.article.dto.ArticleOneRequestDto;
-import edu.pasudo123.board.core.comment.Comment;
+import edu.pasudo123.board.core.comment.model.Comment;
 import edu.pasudo123.board.core.common.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;

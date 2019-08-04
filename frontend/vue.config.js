@@ -7,6 +7,8 @@ function resolve(dir) {
 module.exports = {
 
     devServer: {
+        hot: true,
+        open: true,
         port: 8888,
 
         proxy: {
@@ -24,12 +26,14 @@ module.exports = {
         }
     },
 
-    outputDir: '../src/main/resources/static',
-    assetsDir: 'static',
-    publicPath: process.env.ENV === 'production'
-        ? process.env.VUE_APP_BASE_API
-        : '/',
 
+    // assetsDir: 'static',
+
+
+    outputDir: '../src/main/resources/static',
+    assetsDir: process.env.NODE_ENV === 'production'
+        ? process.env.VUE_ASSET_DIR
+        : process.env.VUE_ASSET_DIR,
     pages: {
         login: {
             entry: './src/pages/login/main.js',

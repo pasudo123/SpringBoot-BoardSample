@@ -1,11 +1,8 @@
 package edu.pasudo123.board.core.global.exception;
 
 import edu.pasudo123.board.core.article.exception.ArticleNotFoundException;
-import edu.pasudo123.board.core.article.exception.ArticleValidationException;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -20,8 +17,8 @@ import java.util.Locale;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ArticleValidationException.class)
-    public ResponseEntity<CustomErrorResponse> handleBindException(ArticleValidationException ex, Locale locale, WebRequest request){
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<CustomErrorResponse> handleBindException(ValidationException ex, Locale locale, WebRequest request){
 
         CustomErrorResponse errorResponse =
                 CustomErrorResponse.builder()

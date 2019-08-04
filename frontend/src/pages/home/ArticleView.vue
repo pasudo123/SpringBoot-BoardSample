@@ -39,8 +39,14 @@
                                     color="blue"
                                     label="댓글작성"
                                     type="text"
+                                    @keyup.enter="addNewComment"
                                     v-model="comment"
                             ></v-text-field>
+                            <div class="commentButtonWrapper">
+                                <button @click="addNewComment" class="commentBtn">
+                                    등록
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -51,6 +57,13 @@
 </template>
 
 <script>
+
+    import {createHelpers} from 'vuex-map-fields'
+
+    const {mapFields: mapCommentFields} = createHelpers({
+        getterType: `getCommentFields`,
+        mutationType: `updateCommentFields`
+    });
 
     import {mapActions, mapGetters, mapMutations} from 'vuex'
 
@@ -63,11 +76,14 @@
             }
         },
         computed: {
+
             ...mapGetters(`articleModule`, {
                 article: `article`,
-            })
+            }),
         },
         methods: {
+
+            ...mapActions([`createComment`]),
 
             ...mapActions(`articleModule`, [
                 'deleteOneArticle'
@@ -100,6 +116,17 @@
                 this.deleteOneArticle().then(() => {
                     this.goList();
                 })
+            },
+
+            addNewComment(){
+                const payload = {};
+                payload.articleId = this.myArticle.id;
+                payload.comment = this.comment;
+
+                this.createComment(payload).then((response) => {
+                    this.comment = '';
+                    console.debug(response.data);
+                })
             }
         },
         created() {
@@ -130,28 +157,44 @@
         margin: 5px 0 20px 0;
     }
 
-    span.typeWrapper{
+    span.typeWrapper {
         padding: 6px 0 6px 0;
         color: darkgreen;
         font-weight: bold;
-        display:inline-block;
+        display: inline-block;
     }
 
-    h2.articleTitle{
+    h2.articleTitle {
         padding-left: 10px;
     }
 
-    div.contentWrapper{
+    div.contentWrapper {
         margin: 10px 0 10px 0;
         padding: 15px;
         border-top: 1px solid grey;
         border-bottom: 1px solid grey;
     }
 
-    div.commentWrapper{
+    div.commentWrapper {
         margin-top: 50px;
         margin-bottom: 10px;
+    }
 
+
+    div.commentButtonWrapper{
+        text-align: right;
+    }
+
+    button.commentBtn {
+        padding: 5px 12px 5px 12px;
+        border-radius: 5px;
+        background-color: #b26138;
+        color: white;
+        position: relative;
+    }
+
+    button.commentBtn:hover {
+        background-color: #7e4528;
     }
 
     div.buttonWrapper {

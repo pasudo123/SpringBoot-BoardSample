@@ -3,14 +3,13 @@ package edu.pasudo123.board.core.article.api;
 import edu.pasudo123.board.core.article.dto.ArticleOneRequestDto;
 import edu.pasudo123.board.core.article.dto.ArticleOneResponseDto;
 import edu.pasudo123.board.core.article.dto.ArticleResponseDto;
-import edu.pasudo123.board.core.article.exception.ArticleValidationException;
+import edu.pasudo123.board.core.global.exception.ValidationException;
 import edu.pasudo123.board.core.article.service.ArticleService;
 import edu.pasudo123.board.core.common.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -39,10 +38,10 @@ public class ArticleController {
 
     @PostMapping("article")
     public ResponseEntity<ArticleOneResponseDto> saveArticle(@Valid @RequestBody ArticleOneRequestDto dto,
-                                                             BindingResult bindingResult) throws ArticleValidationException {
+                                                             BindingResult bindingResult) throws ValidationException {
 
         if(bindingResult.hasErrors()){
-            throw new ArticleValidationException("Validation Result Failed.", bindingResult.getFieldErrors());
+            throw new ValidationException("Validation Result Failed.", bindingResult.getFieldErrors());
         }
 
         return ResponseEntity.ok().body(articleService.addNewArticle(dto));
@@ -65,10 +64,10 @@ public class ArticleController {
     @PatchMapping("article/{articleId}")
     public ResponseEntity<?> updateOneById(@PathVariable Long articleId,
                                            @Valid @RequestBody ArticleOneRequestDto dto,
-                                           BindingResult bindingResult) throws ArticleValidationException {
+                                           BindingResult bindingResult) throws ValidationException {
 
         if(bindingResult.hasErrors()){
-            throw new ArticleValidationException("Validation Result Failed.", bindingResult.getFieldErrors());
+            throw new ValidationException("Validation Result Failed.", bindingResult.getFieldErrors());
         }
 
         return ResponseEntity.ok().body(articleService.updateOneById(articleId, dto));

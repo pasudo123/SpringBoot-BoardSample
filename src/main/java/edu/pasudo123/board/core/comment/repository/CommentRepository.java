@@ -1,5 +1,6 @@
-package edu.pasudo123.board.core.comment;
+package edu.pasudo123.board.core.comment.repository;
 
+import edu.pasudo123.board.core.comment.model.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

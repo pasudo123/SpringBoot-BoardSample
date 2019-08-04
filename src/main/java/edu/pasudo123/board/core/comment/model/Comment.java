@@ -1,4 +1,4 @@
-package edu.pasudo123.board.core.comment;
+package edu.pasudo123.board.core.comment.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.pasudo123.board.core.article.model.Article;
@@ -26,16 +26,16 @@ public class Comment extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false, length = 500)
-    private String content;
+    private String comment;
 
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ARTICLE_ID", nullable = false)
+    @JoinColumn(name = "ARTICLE_ID")
     private Article article;
 
     @Builder
-    public Comment(String content){
-        this.content = content;
+    public Comment(String comment){
+        this.comment = comment;
     }
 
     public void setArticle(Article article){

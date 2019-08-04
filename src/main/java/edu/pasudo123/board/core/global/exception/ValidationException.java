@@ -1,4 +1,4 @@
-package edu.pasudo123.board.core.article.exception;
+package edu.pasudo123.board.core.global.exception;
 
 import lombok.Getter;
 import org.springframework.validation.FieldError;
@@ -11,12 +11,12 @@ import java.util.List;
  * Email: oraedoa@gmail.com
  **/
 @Getter
-public class ArticleValidationException extends RuntimeException{
+public class ValidationException extends RuntimeException{
 
     List<FieldError> fieldErrors;
     String message;
 
-    public ArticleValidationException(String message, List<FieldError> fieldErrors){
+    public ValidationException(String message, List<FieldError> fieldErrors){
         super(message);
         this.message = message;
         this.fieldErrors = fieldErrors;
