@@ -8,6 +8,7 @@ module.exports = {
 
     devServer: {
         port: 8888,
+
         proxy: {
             '/api': {
                 target: 'http://localhost:8080'
@@ -27,7 +28,7 @@ module.exports = {
     assetsDir: 'static',
     publicPath: process.env.ENV === 'production'
         ? process.env.VUE_APP_BASE_API
-        : process.env.VUE_APP_BASE_API,
+        : '/',
 
     pages: {
         login: {

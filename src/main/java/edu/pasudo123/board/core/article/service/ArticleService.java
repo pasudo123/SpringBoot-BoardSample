@@ -1,9 +1,8 @@
 package edu.pasudo123.board.core.article.service;
 
-import edu.pasudo123.board.core.article.dto.ArticleOneDto;
+import edu.pasudo123.board.core.article.dto.ArticleOneRequestDto;
 import edu.pasudo123.board.core.article.dto.ArticleOneResponseDto;
 import edu.pasudo123.board.core.article.dto.ArticleResponseDto;
-import edu.pasudo123.board.core.article.dto.ArticleSaveRequestDto;
 import edu.pasudo123.board.core.article.exception.ArticleNotFoundException;
 import edu.pasudo123.board.core.article.model.Article;
 import edu.pasudo123.board.core.article.repository.ArticleRepository;
@@ -29,7 +28,7 @@ public class ArticleService {
     private ModelMapper modelMapper;
 
     @Transactional
-    public ArticleOneResponseDto addNewArticle(ArticleSaveRequestDto dto) {
+    public ArticleOneResponseDto addNewArticle(ArticleOneRequestDto dto) {
 
         Article savedArticle = articleRepository.save(dto.toEntity());
 
@@ -53,7 +52,7 @@ public class ArticleService {
     }
 
     @Transactional
-    public ArticleOneResponseDto updateOneById(final long articleId, ArticleOneDto dto){
+    public ArticleOneResponseDto updateOneById(final long articleId, ArticleOneRequestDto dto){
 
         Article article = articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException("해당 게시글은 존재하지 않습니다."));
         article.updateArticle(dto);

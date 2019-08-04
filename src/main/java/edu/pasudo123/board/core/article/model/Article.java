@@ -1,8 +1,7 @@
 package edu.pasudo123.board.core.article.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import edu.pasudo123.board.core.article.dto.ArticleOneDto;
-import edu.pasudo123.board.core.article.model.ArticleType;
+import edu.pasudo123.board.core.article.dto.ArticleOneRequestDto;
 import edu.pasudo123.board.core.comment.Comment;
 import edu.pasudo123.board.core.common.BaseTimeEntity;
 import lombok.AccessLevel;
@@ -69,7 +68,7 @@ public class Article extends BaseTimeEntity {
         return ZonedDateTime.of(registrationDateTime, ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
-    public void updateArticle(ArticleOneDto dto){
+    public void updateArticle(ArticleOneRequestDto dto){
         this.title = dto.getTitle();
         this.articleType = dto.getArticleType();
         this.content = dto.getContent();
