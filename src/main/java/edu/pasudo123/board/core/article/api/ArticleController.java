@@ -28,20 +28,12 @@ public class ArticleController {
     @Autowired
     public ArticleService articleService;
 
-    @InitBinder
-    public void initBinder(WebDataBinder webDataBinder){
-
-        /** 공백 값은 null 처리 **/
-        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-        webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-    }
-
     @PostMapping("article")
     public ResponseEntity<ArticleOneResponseDto> saveArticle(@Valid @RequestBody ArticleOneRequestDto dto,
                                                              BindingResult bindingResult) throws ValidationException {
 
         if(bindingResult.hasErrors()){
-            throw new ValidationException("Validation Result Failed.", bindingResult.getFieldErrors());
+            throw new ValidationException("Validation Result Failed.", bindingResult);
         }
 
         return ResponseEntity.ok().body(articleService.addNewArticle(dto));
@@ -67,7 +59,7 @@ public class ArticleController {
                                            BindingResult bindingResult) throws ValidationException {
 
         if(bindingResult.hasErrors()){
-            throw new ValidationException("Validation Result Failed.", bindingResult.getFieldErrors());
+            throw new ValidationException("Validation Result Failed.", bindingResult);
         }
 
         return ResponseEntity.ok().body(articleService.updateOneById(articleId, dto));

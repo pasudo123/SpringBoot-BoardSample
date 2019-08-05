@@ -1,12 +1,19 @@
 package edu.pasudo123.board.core.global.exception;
 
 import edu.pasudo123.board.core.article.exception.ArticleNotFoundException;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -20,10 +27,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<CustomErrorResponse> handleBindException(ValidationException ex, Locale locale, WebRequest request){
 
+        BindingResult bindingResult = ex.getBindingResult();
+        List<ObjectError> errorList = bindingResult.getAllErrors();
+        StringBuffer stringBuffer = new StringBuffer();
+        errorList.forEach(error -> {
+            stringBuffer.append(error.getDefaultMessage() + "\n");
+        });
+
         CustomErrorResponse errorResponse =
                 CustomErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST)
-                .message(ex.getFieldErrors().stream().toString())
+                .message(stringBuffer.toString())
                 .details(request.getDescription(false))
                 .build();
 

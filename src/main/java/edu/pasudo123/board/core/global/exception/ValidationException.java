@@ -1,6 +1,7 @@
 package edu.pasudo123.board.core.global.exception;
 
 import lombok.Getter;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import java.util.List;
@@ -13,12 +14,12 @@ import java.util.List;
 @Getter
 public class ValidationException extends RuntimeException{
 
-    List<FieldError> fieldErrors;
+    BindingResult bindingResult;
     String message;
 
-    public ValidationException(String message, List<FieldError> fieldErrors){
+    public ValidationException(String message, BindingResult bindingResult){
         super(message);
         this.message = message;
-        this.fieldErrors = fieldErrors;
+        this.bindingResult = bindingResult;
     }
 }

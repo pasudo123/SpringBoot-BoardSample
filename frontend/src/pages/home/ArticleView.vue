@@ -48,6 +48,14 @@
                                 </button>
                             </div>
                         </div>
+
+                        <v-list-tile>
+                            <div v-for="element of myArticle.commentList" :key="element.id" class="commentElementWrapper">
+                                <Comment
+                                        :element="element"
+                                ></Comment>
+                            </div>
+                        </v-list-tile>
                     </div>
 
                 </v-flex>
@@ -57,6 +65,8 @@
 </template>
 
 <script>
+
+    import Comment from '@/components/comment/Comment'
 
     import {createHelpers} from 'vuex-map-fields'
 
@@ -69,6 +79,7 @@
 
     export default {
         name: "ArticleView",
+        components: {Comment},
         data() {
             return {
                 myArticle: {},
@@ -118,18 +129,18 @@
                 })
             },
 
-            addNewComment(){
+            addNewComment() {
                 const payload = {};
                 payload.articleId = this.myArticle.id;
                 payload.comment = this.comment;
 
                 this.createComment(payload).then((response) => {
                     this.comment = '';
-                    console.debug(response.data);
                 })
             }
         },
         created() {
+            console.debug(this.article);
             this.myArticle = this.article;
         }
     }
@@ -181,7 +192,7 @@
     }
 
 
-    div.commentButtonWrapper{
+    div.commentButtonWrapper {
         text-align: right;
     }
 
