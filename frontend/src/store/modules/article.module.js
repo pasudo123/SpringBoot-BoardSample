@@ -8,7 +8,7 @@ export default {
     state: {
         article: {},
         articleList: [],
-        isUpdate: false
+        isUpdate: false,
     },
 
     actions: {
@@ -35,7 +35,8 @@ export default {
                     commit('setArticleList', response.data.content);
                     resolve(response.data);
                 }).catch((error) => {
-                    console.error(`전체 아티클 조회 시 에러 발생 : ${error.response}`);
+                    console.error(`전체 아티클 조회 시 에러 발생 : `);
+                    console.error(error.response.data);
                 })
             });
         },
@@ -49,7 +50,8 @@ export default {
                     commit('setOneArticle', response.data);
                     resolve(response);
                 }).catch((error) => {
-                    console.debug(`하나의 아티클 조회 시 에러 발생 : ${error.response}`);
+                    console.debug(`하나의 아티클 조회 시 에러 발생 : `);
+                    console.error(error.response.data);
                     reject(error);
                 });
             });
@@ -63,7 +65,8 @@ export default {
                 instance.patch(requestUri, payload).then((response) => {
                     resolve();
                 }).catch((error) => {
-                    console.debug(`아티클 업데이트 시 에러 발생 : ${error.response}`);
+                    console.error(`아티클 업데이트 시 에러 발생 : `);
+                    console.error(error.response.data);
                 });
             });
         },
@@ -78,7 +81,8 @@ export default {
                     commit(`cleanOneArticle`);
                     resolve();
                 }).catch((error) => {
-                    console.debug(`하나의 아티클 삭제 시 에러 발생 : ${error.response}`);
+                    console.debug(`하나의 아티클 삭제 시 에러 발생 : `);
+                    console.error(error.response.data);
                     reject(error);
                 });
             });

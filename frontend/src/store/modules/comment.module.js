@@ -22,7 +22,7 @@ export default {
                     resolve(response);
                 }).catch((error) => {
                     console.error(`댓글 등록 시 에러 발생 : `);
-                    console.error(error.response);
+                    console.error(error.response.data);
                 })
             });
         }
