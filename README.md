@@ -3,8 +3,8 @@
 
 
 ### 참고자료
-    * [인텔리제이 깃헙 이용](https://cheese10yun.github.io/intellij-github/)
-    * [깃헙 이슈 관리](https://github.com/cheese10yun/github-project-management#pull-requestcode-review)
+   * [인텔리제이 깃헙 이용](https://cheese10yun.github.io/intellij-github/)
+   * [깃헙 이슈 관리](https://github.com/cheese10yun/github-project-management#pull-requestcode-review)
     
 ### 라이브러리
    * [vue-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate)
