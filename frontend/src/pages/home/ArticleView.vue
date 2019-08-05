@@ -49,15 +49,10 @@
                             </div>
                         </div>
 
-                        <v-list-tile>
-                            <div v-for="element of myArticle.commentList" :key="element.id" class="commentElementWrapper">
-                                <Comment
-                                        :element="element"
-                                ></Comment>
-                            </div>
-                        </v-list-tile>
+                        <Comment
+                                :commentList="article.commentList"
+                        ></Comment>
                     </div>
-
                 </v-flex>
             </v-layout>
         </v-container>
@@ -97,6 +92,7 @@
             ...mapActions([`createComment`]),
 
             ...mapActions(`articleModule`, [
+                'fetchOneArticle',
                 'deleteOneArticle'
             ]),
 
@@ -135,12 +131,12 @@
                 payload.comment = this.comment;
 
                 this.createComment(payload).then((response) => {
+                    this.fetchOneArticle(payload.articleId);
                     this.comment = '';
                 })
             }
         },
         created() {
-            console.debug(this.article);
             this.myArticle = this.article;
         }
     }
