@@ -26,10 +26,7 @@ module.exports = {
         }
     },
 
-
     // assetsDir: 'static',
-
-
     outputDir: '../src/main/resources/static',
     assetsDir: process.env.NODE_ENV === 'production'
         ? process.env.VUE_ASSET_DIR

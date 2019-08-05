@@ -17,6 +17,7 @@ Vue.filter("date", DateFilter);
 Vue.filter("error", ErrorFilter);
 
 import '@/style/global.css'
+require('@/style/global.css')
 
 new Vue({
     router,

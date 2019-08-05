@@ -33,6 +33,14 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    /** Spring Security & OAuth 2**/
+    /** https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/#source **/
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    /** Spring Security end **/
+
+
+
     /** freemarker **/
     compile 'org.springframework.boot:spring-boot-starter-freemarker'
     /** freemarker end **/

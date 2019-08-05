@@ -23,8 +23,19 @@ spring:
     suffix: .ftl
 
 ---
-## loggin
+## logging
 logging:
   level:
 #    org.springframework.web: DEBUG
     edu.pasudo123.board: DEBUG
+
+---
+## Google OAuth2
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 763371632947-gbe0d8jm5inrs1155pskmunbpkvj74ii.apps.googleusercontent.com
+            client-secret: aruOsHpSgNqDeU3e8aLEAlYa
