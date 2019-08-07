@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by pasudo123 on 2019-08-03
  * Blog: https://pasudo123.tistory.com/
@@ -17,25 +19,21 @@ public class ViewController {
 
     @GetMapping("/login")
     public String login(){
-
-        log.debug("로그인 화면 진입.");
-
         return "login";
+    }
+
+    @GetMapping("/success")
+    public void success(HttpServletResponse response) throws Exception{
+        response.sendRedirect("/home");
     }
 
     @GetMapping("/home")
     public String home(){
-
-        log.debug("홈 화면 진입");
-
-        return "index";
+        return "home";
     }
 
     @GetMapping("/arti**")
     public String article(){
-
-        log.debug("홈 화면 진입");
-
-        return "index";
+        return "home";
     }
 }

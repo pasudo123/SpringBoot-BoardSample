@@ -18,7 +18,6 @@ public class OAuthAttributesDto {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
     private String name;
-    private String login;
     private String email;
     private String profileImage;
 
@@ -27,7 +26,6 @@ public class OAuthAttributesDto {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
-        this.login = login;
         this.email = email;
         this.profileImage = profileImage;
     }
@@ -35,11 +33,11 @@ public class OAuthAttributesDto {
 
     public static OAuthAttributesDto of(String userNameAttributeName, Map<String, Object> attributes){
         return OAuthAttributesDto.builder()
-                .name((String) attributes.get("name"))
-                .login((String) attributes.get("login"))
-                .email((String) attributes.get("email"))
-                .profileImage("https://avatars1.githubusercontent.com/u/17797352?s=400&u=d8373790d3ea5b4ac35323b0effd1171c2a14a3d&v=4")
+                .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
+                .name((String) attributes.get("name"))
+                .email((String) attributes.get("email"))
+                .profileImage((String) attributes.get("picture"))
                 .build();
     }
 
@@ -47,7 +45,6 @@ public class OAuthAttributesDto {
         return User.builder()
                 .name(name)
                 .email(email)
-                .username(login)
                 .profileImage(profileImage)
                 .role(Role.USER)
                 .build();

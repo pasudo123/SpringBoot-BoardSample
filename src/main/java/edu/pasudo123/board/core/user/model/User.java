@@ -27,9 +27,6 @@ public class User {
     private String name;
 
     @Column(nullable = false)
-    private String username;    // google username
-
-    @Column(nullable = false)
     private String email;
 
     @Column
@@ -40,11 +37,11 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String name, String username, String email, String profileImage, Role role){
+    public User(String name, String email, String profileImage, Role role){
         this.name = name;
-        this.username = username;
         this.email = email;
         this.profileImage = profileImage;
+        this.role = role;
     }
 
     public String getRoleKey(){
@@ -52,7 +49,7 @@ public class User {
     }
 
     public User updateUser(OAuthAttributesDto oAuthAttributes){
-        this.username = oAuthAttributes.getName();
+        this.name = oAuthAttributes.getName();
         this.profileImage = oAuthAttributes.getProfileImage();
 
         return this;

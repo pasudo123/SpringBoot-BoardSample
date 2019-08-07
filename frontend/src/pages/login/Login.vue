@@ -22,15 +22,12 @@
             }
         },
         methods: {
-            goHome() {
-
-                const backendHref = `http://localhost:8080/home`;
-
-                window.location.href = backendHref
-            },
-
             loginProcess() {
 
+                const API_BASE_URI = `http://localhost:8080`;
+                const GOOGLE_AUTH_URI = `${API_BASE_URI}/oauth2/authorization/google`;
+
+                window.location.href = GOOGLE_AUTH_URI;
             }
         }
     }
@@ -41,7 +38,6 @@
         margin: 0 auto;
         text-align: center;
     }
-
     div.loginWrapper{
         padding: 100px 0 100px 0;
     }

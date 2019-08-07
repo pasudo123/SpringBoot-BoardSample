@@ -40,7 +40,7 @@ module.exports = {
         home: {
             entry: './src/pages/home/main.js',
             template: 'public/index.html',
-            filename: './templates/index.ftl'
+            filename: './templates/home.ftl'
         },
     },
 };
