@@ -44,7 +44,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         httpSession.setAttribute("user", new SessionUserDto(user));
 
         return CustomOAuth2User.builder()
-                .authUser(user)
+                .user(user)
                 .authorities(Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())))
                 .attributes(oAuthAttributes.getAttributes())
                 .nameAttributeKey(nameAttributeKey)
