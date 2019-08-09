@@ -26,11 +26,9 @@ module.exports = {
         }
     },
 
-    // assetsDir: 'static',
+    publicPath: '/',
     outputDir: '../src/main/resources/static',
-    assetsDir: process.env.NODE_ENV === 'production'
-        ? process.env.VUE_ASSET_DIR_PATH
-        : process.env.VUE_ASSET_DIR_PATH,
+    assetsDir: 'static',
     pages: {
         login: {
             entry: './src/pages/login/main.js',

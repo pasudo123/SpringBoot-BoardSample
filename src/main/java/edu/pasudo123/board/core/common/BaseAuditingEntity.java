@@ -1,6 +1,8 @@
 package edu.pasudo123.board.core.common;
 
+import edu.pasudo123.board.core.user.model.User;
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,14 +13,14 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 /**
- * Created by pasudo123 on 2019-07-27
+ * Created by pasudo123 on 2019-08-08
  * Blog: https://pasudo123.tistory.com/
  * Email: oraedoa@gmail.com
  **/
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseTimeEntity {
+public class BaseAuditingEntity<U> {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -27,5 +29,9 @@ public abstract class BaseTimeEntity {
     @LastModifiedDate
     @Column(nullable =  false)
     private LocalDateTime modifiedDate;
+
+    @CreatedBy
+    @Column(nullable = false, updatable = false)
+    private U createdBy;
 
 }

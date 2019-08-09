@@ -1,5 +1,6 @@
 package edu.pasudo123.board.core.config.auth.dto;
 
+import edu.pasudo123.board.core.config.auth.AuthType;
 import edu.pasudo123.board.core.user.model.Role;
 import edu.pasudo123.board.core.user.model.User;
 import lombok.Builder;
@@ -16,25 +17,36 @@ import java.util.Map;
 public class OAuthAttributesDto {
 
     private Map<String, Object> attributes;
-    private String nameAttributeKey;
+    private String userId;
     private String name;
     private String email;
     private String profileImage;
 
     @Builder
-    public OAuthAttributesDto(Map<String, Object> attributes, String nameAttributeKey, String name, String login, String email, String profileImage){
+    public OAuthAttributesDto(Map<String, Object> attributes, String userId, String name, String email, String profileImage){
         this.attributes = attributes;
-        this.nameAttributeKey = nameAttributeKey;
+        this.userId = userId;
         this.name = name;
         this.email = email;
         this.profileImage = profileImage;
     }
 
 
-    public static OAuthAttributesDto of(String userNameAttributeName, Map<String, Object> attributes){
+    public static OAuthAttributesDto of(String registrationId, Map<String, Object> attributes){
+
+        String userId = "";
+
+        for(AuthType type : AuthType.values()){
+            if(!type.name().equalsIgnoreCase(registrationId)){
+                continue;
+            }
+
+            userId = type.name().toUpperCase() + "_" + attributes.get("sub");
+        }
+
         return OAuthAttributesDto.builder()
                 .attributes(attributes)
-                .nameAttributeKey(userNameAttributeName)
+                .userId(userId)
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .profileImage((String) attributes.get("picture"))
@@ -43,6 +55,7 @@ public class OAuthAttributesDto {
 
     public User toEntity(){
         return User.builder()
+                .userId(userId)
                 .name(name)
                 .email(email)
                 .profileImage(profileImage)

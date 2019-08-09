@@ -3,7 +3,8 @@ package edu.pasudo123.board.core.article.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import edu.pasudo123.board.core.article.dto.ArticleOneRequestDto;
 import edu.pasudo123.board.core.comment.model.Comment;
-import edu.pasudo123.board.core.common.BaseTimeEntity;
+import edu.pasudo123.board.core.common.BaseAuditingEntity;
+import edu.pasudo123.board.core.user.model.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,13 +25,13 @@ import java.util.List;
  **/
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "ARTICLE", indexes = {
         @Index(name = "idx_article_1", columnList = "descIndex"),
         @Index(name = "idx_article_2", columnList = "registrationDate")
 })
-public class Article extends BaseTimeEntity {
+public class Article extends BaseAuditingEntity<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package edu.pasudo123.board.core.global.exception;
 
 import edu.pasudo123.board.core.article.exception.ArticleNotFoundException;
+import edu.pasudo123.board.core.user.exception.UserNotFoundException;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ArticleNotFoundException.class)
     public ResponseEntity<CustomErrorResponse> articleNotFoundException(ArticleNotFoundException ex, WebRequest request){
+
+        CustomErrorResponse errorResponse =
+                CustomErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND)
+                .message(ex.getMessage())
+                .details(request.getDescription(false))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<CustomErrorResponse> userNotFoundException(UserNotFoundException ex, WebRequest request){
 
         CustomErrorResponse errorResponse =
                 CustomErrorResponse.builder()

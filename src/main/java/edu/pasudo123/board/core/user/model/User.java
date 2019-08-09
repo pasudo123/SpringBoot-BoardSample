@@ -16,12 +16,16 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "USER", uniqueConstraints = { @UniqueConstraint(name = "unique_email", columnNames = {"email"}) })
+@Table(name = "USER", uniqueConstraints = {
+        @UniqueConstraint(name = "unique_email", columnNames = {"email"})})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String userId;
 
     @Column(nullable = false)
     private String name;
@@ -37,7 +41,8 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String name, String email, String profileImage, Role role){
+    public User(String userId, String name, String email, String profileImage, Role role){
+        this.userId = userId;
         this.name = name;
         this.email = email;
         this.profileImage = profileImage;

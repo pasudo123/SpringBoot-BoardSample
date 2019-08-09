@@ -35,21 +35,23 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-                .getUserInfoEndpoint().getUserNameAttributeName();
+        String nameAttributeKey = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
-        OAuthAttributesDto oAuthAttributes = OAuthAttributesDto.of(userNameAttributeName, oAuth2User.getAttributes());
+        OAuthAttributesDto oAuthAttributes = OAuthAttributesDto.of(registrationId, oAuth2User.getAttributes());
 
         User user = saveOrUpdate(oAuthAttributes);
         httpSession.setAttribute("user", new SessionUserDto(user));
 
-        return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
-                oAuthAttributes.getAttributes(),
-                oAuthAttributes.getNameAttributeKey());
+        return CustomOAuth2User.builder()
+                .authUser(user)
+                .authorities(Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())))
+                .attributes(oAuthAttributes.getAttributes())
+                .nameAttributeKey(nameAttributeKey)
+                .build();
     }
 
-    private User saveOrUpdate(OAuthAttributesDto oAuthAttributesDto){
+    private User saveOrUpdate(OAuthAttributesDto oAuthAttributesDto) {
 
         User user = userRepository.findByEmail(oAuthAttributesDto.getEmail())
                 .map(entity -> entity.updateUser(oAuthAttributesDto))

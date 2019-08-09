@@ -16,7 +16,7 @@ import javax.persistence.*;
  * Email: oraedoa@gmail.com
  **/
 @Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "COMMENT")
 public class Comment extends BaseTimeEntity {
