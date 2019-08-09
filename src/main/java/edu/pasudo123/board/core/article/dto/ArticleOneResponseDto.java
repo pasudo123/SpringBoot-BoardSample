@@ -4,6 +4,7 @@ import edu.pasudo123.board.core.article.model.Article;
 import edu.pasudo123.board.core.article.model.ArticleType;
 import edu.pasudo123.board.core.comment.dto.CommentResponseDto;
 import edu.pasudo123.board.core.comment.model.Comment;
+import edu.pasudo123.board.core.config.auth.dto.SessionUserDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

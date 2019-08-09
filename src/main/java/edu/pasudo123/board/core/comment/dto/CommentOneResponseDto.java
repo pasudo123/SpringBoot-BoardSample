@@ -1,6 +1,5 @@
 package edu.pasudo123.board.core.comment.dto;
 
-import edu.pasudo123.board.core.article.dto.ArticleResponseDto;
 import edu.pasudo123.board.core.comment.model.Comment;
 import lombok.Getter;
 

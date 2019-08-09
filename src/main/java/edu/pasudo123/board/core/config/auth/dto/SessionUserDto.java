@@ -15,11 +15,11 @@ public class SessionUserDto implements Serializable {
 
     private String name;
     private String email;
-    private String profileImage;
+    private String profile;
 
     public SessionUserDto(User user){
         this.name = user.getName();
         this.email = user.getEmail();
-        this.profileImage = user.getProfileImage();
+        this.profile = user.getProfileImage();
     }
 }

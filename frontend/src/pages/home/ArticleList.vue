@@ -33,12 +33,12 @@
                                     @click="into(article)"
                             >
                                 <v-list-tile-avatar>
-                                    <img :src="avatar">
+                                    <img :src="article.writer.userProfile">
                                 </v-list-tile-avatar>
 
                                 <v-list-tile-content>
+                                    <v-list-tile-title v-html="article.writer.name"></v-list-tile-title>
                                     <v-list-tile-title v-html="article.title"></v-list-tile-title>
-                                    <!--<v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>-->
                                 </v-list-tile-content>
                             </v-list-tile>
                             <hr>

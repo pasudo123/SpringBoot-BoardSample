@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import edu.pasudo123.board.core.article.dto.ArticleOneRequestDto;
 import edu.pasudo123.board.core.comment.model.Comment;
 import edu.pasudo123.board.core.common.BaseAuditingEntity;
-import edu.pasudo123.board.core.user.model.User;
+import edu.pasudo123.board.core.common.Writer;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,15 +51,24 @@ public class Article extends BaseAuditingEntity<String> {
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "name", column = @Column(name = "article_user_name")),
+            @AttributeOverride(name = "email", column = @Column(name = "article_user_email")),
+            @AttributeOverride(name = "userProfile", column = @Column(name = "article_user_profile"))
+    })
+    private Writer writer;
+
     private LocalDateTime registrationDateTime;
     private LocalDate registrationDate;
     private long descIndex;
 
     @Builder
-    public Article(String title, ArticleType articleType, String content){
+    public Article(String title, ArticleType articleType, String content, Writer writer){
         this.title = title;
         this.articleType = articleType;
         this.content = content;
+        this.writer = writer;
         this.registrationDateTime = LocalDateTime.now();
         this.registrationDate = registrationDateTime.toLocalDate();
         this.descIndex = toMillisecond(registrationDateTime);

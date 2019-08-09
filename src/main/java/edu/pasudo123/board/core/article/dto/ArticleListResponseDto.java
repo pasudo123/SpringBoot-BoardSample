@@ -2,6 +2,7 @@ package edu.pasudo123.board.core.article.dto;
 
 import edu.pasudo123.board.core.article.model.Article;
 import edu.pasudo123.board.core.article.model.ArticleType;
+import edu.pasudo123.board.core.common.Writer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
  **/
 @Getter
 @NoArgsConstructor
-public class ArticleResponseDto {
+public class ArticleListResponseDto {
 
     private Long id;
     private String title;
@@ -24,8 +25,9 @@ public class ArticleResponseDto {
     private LocalDate registrationDate;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
+    private Writer writer;
 
-    public ArticleResponseDto(Article article){
+    public ArticleListResponseDto(Article article){
         this.id = article.getId();
         this.title = article.getTitle();
         this.articleType = article.getArticleType();
@@ -33,5 +35,6 @@ public class ArticleResponseDto {
         this.registrationDate = article.getRegistrationDate();
         this.createdDate = article.getCreatedDate();
         this.modifiedDate = article.getModifiedDate();
+        this.writer = article.getWriter();
     }
 }

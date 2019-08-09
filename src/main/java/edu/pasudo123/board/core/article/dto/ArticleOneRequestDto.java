@@ -2,6 +2,8 @@ package edu.pasudo123.board.core.article.dto;
 
 import edu.pasudo123.board.core.article.model.Article;
 import edu.pasudo123.board.core.article.model.ArticleType;
+import edu.pasudo123.board.core.common.Writer;
+import edu.pasudo123.board.core.config.auth.dto.SessionUserDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +31,8 @@ public class ArticleOneRequestDto {
     @NotNull(message = "Content is required.")
     private String content;
 
+    private Writer writer;
+
     @Builder
     public ArticleOneRequestDto(String title, ArticleType articleType, String content){
         this.title = title;
@@ -36,12 +40,20 @@ public class ArticleOneRequestDto {
         this.content = content;
     }
 
+    public void setWriter(SessionUserDto dto){
+        this.writer = Writer.builder()
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .userProfile(dto.getProfile())
+                .build();
+    }
+
     public Article toEntity() {
         return Article.builder()
                 .title(title)
                 .articleType(articleType)
                 .content(content)
+                .writer(writer)
                 .build();
     }
-
 }
