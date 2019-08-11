@@ -2,8 +2,6 @@ package edu.pasudo123.board.core.article.dto;
 
 import edu.pasudo123.board.core.article.model.Article;
 import edu.pasudo123.board.core.article.model.ArticleType;
-import edu.pasudo123.board.core.common.Writer;
-import edu.pasudo123.board.core.config.auth.dto.SessionUserDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,14 +28,6 @@ public class ArticleOneRequestDto {
     @NotBlank(message = "Content is Not Empty.")
     @NotNull(message = "Content is required.")
     private String content;
-
-
-    @Builder
-    public ArticleOneRequestDto(String title, ArticleType articleType, String content, SessionUserDto dto){
-        this.title = title;
-        this.articleType = articleType;
-        this.content = content;
-    }
 
     public Article toEntity() {
         return Article.builder()

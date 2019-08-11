@@ -1,6 +1,5 @@
 package edu.pasudo123.board.core.article.service.impl;
 
-import edu.pasudo123.board.core.article.exception.ArticleNotFoundException;
 import edu.pasudo123.board.core.article.repository.ArticleRepository;
 import edu.pasudo123.board.core.article.service.ArticleDeleteService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,7 @@ public class ArticleDeleteServiceImpl implements ArticleDeleteService {
 
     @Transactional
     @Override
-    public void deleteOneById(long articleId) {
-        articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException("해당 게시글은 존재하지 않습니다."));
+    public void deleteOneById(final long articleId) {
         articleRepository.deleteById(articleId);
     }
 }

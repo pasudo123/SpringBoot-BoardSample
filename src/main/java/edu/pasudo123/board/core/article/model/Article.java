@@ -1,11 +1,9 @@
 package edu.pasudo123.board.core.article.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.pasudo123.board.core.article.dto.ArticleOneRequestDto;
 import edu.pasudo123.board.core.comment.model.Comment;
-import edu.pasudo123.board.core.common.BaseAuditingEntity;
 import edu.pasudo123.board.core.common.BaseTimeEntity;
-import edu.pasudo123.board.core.common.Writer;
 import edu.pasudo123.board.core.user.model.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -49,17 +47,9 @@ public class Article extends BaseTimeEntity {
     @Column(nullable = false, length = 1000)
     private String content;
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
-
-//    @Embedded
-//    @AttributeOverrides({
-//            @AttributeOverride(name = "name", column = @Column(name = "article_user_name")),
-//            @AttributeOverride(name = "email", column = @Column(name = "article_user_email")),
-//            @AttributeOverride(name = "userProfile", column = @Column(name = "article_user_profile"))
-//    })
-//    private Writer writer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
@@ -90,14 +80,12 @@ public class Article extends BaseTimeEntity {
         this.content = dto.getContent();
     }
 
-
     public void setWriterUser(User user){
         this.writerUser = user;
         this.writerUser.getArticleList().add(this);
     }
 
-    public void addComment(Comment comment){
-        comment.setArticle(this);
+    public void addNewComment(Comment comment){
         getCommentList().add(comment);
     }
 

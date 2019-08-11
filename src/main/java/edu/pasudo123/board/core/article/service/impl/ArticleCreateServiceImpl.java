@@ -6,7 +6,7 @@ import edu.pasudo123.board.core.article.model.Article;
 import edu.pasudo123.board.core.article.repository.ArticleRepository;
 import edu.pasudo123.board.core.article.service.ArticleCreateService;
 import edu.pasudo123.board.core.user.model.User;
-import edu.pasudo123.board.core.user.service.UserFindService;
+import edu.pasudo123.board.core.user.service.UserExternalFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,16 +20,18 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ArticleCreateServiceImpl implements ArticleCreateService {
 
-    private final UserFindService userFindService;
+    private final UserExternalFindService userExternalFindService;
     private final ArticleRepository articleRepository;
 
     @Transactional
     @Override
     public ArticleOneResponseDto addNewArticle(ArticleOneRequestDto dto, User currentUser) {
 
-        Article savedArticle = articleRepository.save(dto.toEntity());
-        User user = userFindService.findByUserRegistrationId(currentUser.getUserRegistrationId());
-        savedArticle.setWriterUser(user);
+        User foundUser = userExternalFindService.findByUserRegistrationId(currentUser.getUserRegistrationId());
+        Article article = dto.toEntity();
+        article.setWriterUser(foundUser);
+
+        Article savedArticle = articleRepository.save(article);
 
         return new ArticleOneResponseDto(savedArticle);
     }
