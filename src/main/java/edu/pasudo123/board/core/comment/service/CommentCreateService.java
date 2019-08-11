@@ -2,6 +2,7 @@ package edu.pasudo123.board.core.comment.service;
 
 import edu.pasudo123.board.core.comment.dto.CommentOneRequestDto;
 import edu.pasudo123.board.core.comment.dto.CommentOneResponseDto;
+import edu.pasudo123.board.core.user.model.User;
 
 /**
  * Created by pasudo123 on 2019-08-11
@@ -10,6 +11,6 @@ import edu.pasudo123.board.core.comment.dto.CommentOneResponseDto;
  **/
 public interface CommentCreateService {
 
-    CommentOneResponseDto addNewComment(CommentOneRequestDto dto);
+    CommentOneResponseDto addNewComment(CommentOneRequestDto dto, User currentUser);
 
 }

@@ -1,5 +1,6 @@
 package edu.pasudo123.board.core.comment.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.pasudo123.board.core.article.model.Article;
 import edu.pasudo123.board.core.common.BaseTimeEntity;
@@ -29,7 +30,7 @@ public class Comment extends BaseTimeEntity {
     @Column(nullable = false, length = 500)
     private String comment;
 
-    @JsonManagedReference
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ARTICLE_ID")
     private Article article;
@@ -45,5 +46,11 @@ public class Comment extends BaseTimeEntity {
 
     public void setArticle(Article article){
         this.article = article;
+        article.addNewComment(this);
+    }
+
+    public void setWriterUser(User user){
+        this.writerUser = user;
+        user.addNewComment(this);
     }
 }

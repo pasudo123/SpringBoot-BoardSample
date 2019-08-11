@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * Email: oraedoa@gmail.com
  **/
 @Getter
-public class CommentResponseDto {
+public class CommentOneResponseDto {
 
     private Long id;
     private String comment;
@@ -24,16 +24,11 @@ public class CommentResponseDto {
     @JsonProperty("writer")
     private WriterDto writerDto;
 
-    public CommentResponseDto(Comment comment){
+    public CommentOneResponseDto(Comment comment){
         this.id = comment.getId();
         this.comment = comment.getComment();
         this.createDateTime = comment.getCreatedDate();
         this.createDate = this.createDateTime.toLocalDate();
-
-        this.writerDto = WriterDto.builder()
-                .userRegistrationId(comment.getWriterUser().getUserRegistrationId())
-                .name(comment.getWriterUser().getName())
-                .profileImage(comment.getWriterUser().getProfileImage())
-                .build();
+        this.writerDto = new WriterDto(comment.getWriterUser());
     }
 }
