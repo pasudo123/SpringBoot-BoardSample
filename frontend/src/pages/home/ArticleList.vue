@@ -33,7 +33,7 @@
                                     @click="into(article)"
                             >
                                 <v-list-tile-avatar>
-                                    <img :src="article.writer.userProfile">
+                                    <img :src="article.writer.image">
                                 </v-list-tile-avatar>
 
                                 <v-list-tile-content>
@@ -74,15 +74,11 @@
             }
         },
         computed: {
-            ...mapGetters(`articleModule`, {
-                articleList: `articleList`,
-            })
+            ...mapGetters([`articleList`]),
         },
         methods: {
 
-            ...mapActions(`articleModule`, [
-                `fetchAllArticle`, `fetchOneArticle`
-            ]),
+            ...mapActions([`fetchAllArticle`, `fetchOneArticle`]),
 
             into(article) {
                 this.fetchOneArticle(article.id).then((response) => {

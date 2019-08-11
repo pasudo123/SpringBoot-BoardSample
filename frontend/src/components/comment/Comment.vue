@@ -9,14 +9,18 @@
                     class="commentElement"
             >
                 <v-list-tile-avatar>
-                    <img :src="avatarSrc">
+                    <img :src="comment.writer.image">
                 </v-list-tile-avatar>
 
                 <v-list-tile-content>
                     <v-list-tile-title>{{comment.comment}}</v-list-tile-title>
                     <v-list-tile-sub-title>{{ comment.createDate }}</v-list-tile-sub-title>
                 </v-list-tile-content>
-
+                <div class="settingWrapper">
+                    <span class="modifyBtn" @click="modifyProcess">수정</span>
+                    <br>
+                    <span class="deleteBtn" @click="deleteProcess">삭제</span>
+                </div>
             </v-list-tile>
         </v-list>
     </div>
@@ -36,6 +40,14 @@
         methods: {
             commentMore() {
 
+            },
+
+            modifyProcess() {
+                console.debug("수정");
+            },
+
+            deleteProcess() {
+                console.debug("삭제");
             }
         }
 
@@ -51,5 +63,23 @@
     .commentElement {
         border: 1px solid gainsboro;
         padding: 5px 0 5px 0;
+    }
+
+    span.modifyBtn{
+        display: inline-block;
+        padding: 2px 7px 2px 7px;
+        background-color: darkgreen;
+        color: white;
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+    span.deleteBtn{
+        display: inline-block;
+        padding: 2px 7px 2px 7px;
+        background-color: darkgreen;
+        color: white;
+        font-size: 14px;
+        margin-top: 2px;
     }
 </style>

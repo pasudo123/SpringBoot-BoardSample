@@ -64,13 +64,12 @@
     import Comment from '@/components/comment/Comment'
 
     import {createHelpers} from 'vuex-map-fields'
+    import {mapActions, mapGetters, mapMutations} from 'vuex'
 
     const {mapFields: mapCommentFields} = createHelpers({
         getterType: `getCommentFields`,
         mutationType: `updateCommentFields`
     });
-
-    import {mapActions, mapGetters, mapMutations} from 'vuex'
 
     export default {
         name: "ArticleView",
@@ -83,22 +82,12 @@
         },
         computed: {
 
-            ...mapGetters(`articleModule`, {
-                article: `article`,
-            }),
+            ...mapGetters([`article`]),
         },
         methods: {
-
             ...mapActions([`createComment`]),
-
-            ...mapActions(`articleModule`, [
-                'fetchOneArticle',
-                'deleteOneArticle'
-            ]),
-
-            ...mapMutations(`articleModule`, [
-                `toggleIsUpdate`
-            ]),
+            ...mapActions(['fetchOneArticle', 'deleteOneArticle']),
+            ...mapMutations([`toggleIsUpdate`]),
 
             parseType(type) {
                 if (type === 'LIFE') {

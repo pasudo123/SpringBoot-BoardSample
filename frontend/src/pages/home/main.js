@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import App from '@/pages/home/App.vue'
 import router from '@/config/router'
@@ -18,8 +17,16 @@ Vue.filter("error", ErrorFilter);
 
 import '@/style/global.css'
 
+router.beforeEach((to, from, next) => {
+    console.debug("전역가드 호출");
+
+
+
+    next();
+});
+
 new Vue({
     router,
     store,
-    render: h => h (App)
+    render: h => h(App)
 }).$mount('#app');
