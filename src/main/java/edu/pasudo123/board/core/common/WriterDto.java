@@ -1,5 +1,6 @@
 package edu.pasudo123.board.core.article.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,8 +15,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ArticleWriterDto {
 
+    @JsonProperty("registrationId")
     String userRegistrationId;
+
+    @JsonProperty("name")
     String name;
+
+    @JsonProperty("image")
     String profileImage;
 
     @Builder
