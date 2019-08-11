@@ -2,10 +2,9 @@ package edu.pasudo123.board.core.comment.api;
 
 import edu.pasudo123.board.core.comment.dto.CommentOneRequestDto;
 import edu.pasudo123.board.core.comment.dto.CommentOneResponseDto;
-import edu.pasudo123.board.core.comment.model.Comment;
-import edu.pasudo123.board.core.comment.service.CommentService;
+import edu.pasudo123.board.core.comment.service.CommentCreateService;
 import edu.pasudo123.board.core.global.exception.ValidationException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +18,10 @@ import javax.validation.Valid;
  **/
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentCreateService commentCreateService;
 
     @PostMapping("/comment")
     public ResponseEntity<CommentOneResponseDto> saveComment(@Valid @RequestBody CommentOneRequestDto dto,
@@ -32,6 +31,6 @@ public class CommentController {
             throw new ValidationException("Validation Result Failed.", bindingResult);
         }
 
-        return ResponseEntity.ok().body(commentService.addNewComment(dto));
+        return ResponseEntity.ok().body(commentCreateService.addNewComment(dto));
     }
 }

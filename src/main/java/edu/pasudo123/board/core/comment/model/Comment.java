@@ -3,6 +3,7 @@ package edu.pasudo123.board.core.comment.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.pasudo123.board.core.article.model.Article;
 import edu.pasudo123.board.core.common.BaseTimeEntity;
+import edu.pasudo123.board.core.user.model.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,17 +34,16 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "ARTICLE_ID")
     private Article article;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User writerUser;
+
     @Builder
     public Comment(String comment){
         this.comment = comment;
     }
 
     public void setArticle(Article article){
-        if(this.article != null){
-            this.article.removeComment(this);
-        }
-
         this.article = article;
-        article.addComment(this);
     }
 }
