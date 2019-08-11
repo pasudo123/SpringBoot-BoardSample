@@ -31,21 +31,12 @@ public class ArticleOneRequestDto {
     @NotNull(message = "Content is required.")
     private String content;
 
-    private Writer writer;
 
     @Builder
-    public ArticleOneRequestDto(String title, ArticleType articleType, String content){
+    public ArticleOneRequestDto(String title, ArticleType articleType, String content, SessionUserDto dto){
         this.title = title;
         this.articleType = articleType;
         this.content = content;
-    }
-
-    public void setWriter(SessionUserDto dto){
-        this.writer = Writer.builder()
-                .name(dto.getName())
-                .email(dto.getEmail())
-                .userProfile(dto.getProfile())
-                .build();
     }
 
     public Article toEntity() {
@@ -53,7 +44,6 @@ public class ArticleOneRequestDto {
                 .title(title)
                 .articleType(articleType)
                 .content(content)
-                .writer(writer)
                 .build();
     }
 }

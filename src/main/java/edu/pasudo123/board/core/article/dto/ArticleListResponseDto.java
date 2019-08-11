@@ -25,7 +25,7 @@ public class ArticleListResponseDto {
     private LocalDate registrationDate;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-    private Writer writer;
+    private ArticleWriterDto writerDto;
 
     public ArticleListResponseDto(Article article){
         this.id = article.getId();
@@ -35,6 +35,11 @@ public class ArticleListResponseDto {
         this.registrationDate = article.getRegistrationDate();
         this.createdDate = article.getCreatedDate();
         this.modifiedDate = article.getModifiedDate();
-        this.writer = article.getWriter();
+
+        this.writerDto = ArticleWriterDto.builder()
+                .userRegistrationId(article.getWriterUser().getUserRegistrationId())
+                .name(article.getWriterUser().getName())
+                .profileImage(article.getWriterUser().getProfileImage())
+                .build();
     }
 }

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import edu.pasudo123.board.core.article.dto.ArticleOneRequestDto;
 import edu.pasudo123.board.core.comment.model.Comment;
 import edu.pasudo123.board.core.common.BaseAuditingEntity;
+import edu.pasudo123.board.core.common.BaseTimeEntity;
 import edu.pasudo123.board.core.common.Writer;
+import edu.pasudo123.board.core.user.model.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +33,7 @@ import java.util.List;
         @Index(name = "idx_article_1", columnList = "descIndex"),
         @Index(name = "idx_article_2", columnList = "registrationDate")
 })
-public class Article extends BaseAuditingEntity<String> {
+public class Article extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,24 +53,28 @@ public class Article extends BaseAuditingEntity<String> {
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "name", column = @Column(name = "article_user_name")),
-            @AttributeOverride(name = "email", column = @Column(name = "article_user_email")),
-            @AttributeOverride(name = "userProfile", column = @Column(name = "article_user_profile"))
-    })
-    private Writer writer;
+//    @Embedded
+//    @AttributeOverrides({
+//            @AttributeOverride(name = "name", column = @Column(name = "article_user_name")),
+//            @AttributeOverride(name = "email", column = @Column(name = "article_user_email")),
+//            @AttributeOverride(name = "userProfile", column = @Column(name = "article_user_profile"))
+//    })
+//    private Writer writer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User writerUser;
 
     private LocalDateTime registrationDateTime;
     private LocalDate registrationDate;
     private long descIndex;
 
     @Builder
-    public Article(String title, ArticleType articleType, String content, Writer writer){
+    public Article(String title, ArticleType articleType, String content, User writerUser){
         this.title = title;
         this.articleType = articleType;
         this.content = content;
-        this.writer = writer;
+        this.writerUser = writerUser;
         this.registrationDateTime = LocalDateTime.now();
         this.registrationDate = registrationDateTime.toLocalDate();
         this.descIndex = toMillisecond(registrationDateTime);
@@ -84,12 +90,15 @@ public class Article extends BaseAuditingEntity<String> {
         this.content = dto.getContent();
     }
 
-    public void addComment(Comment comment){
-        if(commentList == null){
-            commentList = new ArrayList<>();
-        }
 
-        commentList.add(comment);
+    public void setWriterUser(User user){
+        this.writerUser = user;
+        this.writerUser.getArticleList().add(this);
+    }
+
+    public void addComment(Comment comment){
+        comment.setArticle(this);
+        getCommentList().add(comment);
     }
 
     public void removeComment(Comment comment){
