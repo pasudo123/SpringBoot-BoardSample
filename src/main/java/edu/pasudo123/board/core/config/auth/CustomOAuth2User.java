@@ -46,7 +46,7 @@ public class CustomOAuth2User implements OAuth2User, Serializable {
 
     @Override
     public String getName() {
-        return this.user.getUserId();
+        return this.user.getUserRegistrationId();
     }
 
     public User getUser() {
