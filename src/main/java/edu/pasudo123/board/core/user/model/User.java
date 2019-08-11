@@ -1,12 +1,18 @@
 package edu.pasudo123.board.core.user.model;
 
+import edu.pasudo123.board.core.article.model.Article;
+import edu.pasudo123.board.core.comment.model.Comment;
 import edu.pasudo123.board.core.config.auth.dto.OAuthAttributesDto;
+import edu.pasudo123.board.core.user.dto.UserOneRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pasudo123 on 2019-08-06
@@ -17,7 +23,8 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "USER", uniqueConstraints = {
-        @UniqueConstraint(name = "unique_email", columnNames = {"email"})})
+        @UniqueConstraint(name = "unique_user_registration_id", columnNames = {"userRegistrationId"}),
+})
 public class User {
 
     @Id
@@ -25,7 +32,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String userId;
+    private String userRegistrationId;
 
     @Column(nullable = false)
     private String name;
@@ -40,22 +47,37 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+
+    @OneToMany(mappedBy = "writerUser", fetch = FetchType.LAZY)
+    List<Article> articleList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writerUser", fetch = FetchType.LAZY)
+    List<Comment> commentList = new ArrayList<>();
+
     @Builder
-    public User(String userId, String name, String email, String profileImage, Role role){
-        this.userId = userId;
+    public User(String userRegistrationId, String name, String email, String profileImage, Role role) {
+        this.userRegistrationId = userRegistrationId;
         this.name = name;
         this.email = email;
         this.profileImage = profileImage;
         this.role = role;
     }
 
-    public String getRoleKey(){
+    public void addNewArticle(Article article) {
+        article.setWriterUser(this);
+    }
+
+    public void addNewComment(Comment comment){
+        getCommentList().add(comment);
+    }
+
+    public String getRoleKey() {
         return this.role.getKey();
     }
 
-    public User updateUser(OAuthAttributesDto oAuthAttributes){
-        this.name = oAuthAttributes.getName();
-        this.profileImage = oAuthAttributes.getProfileImage();
+    public User updateUser(UserOneRequestDto dto){
+        this.name = dto.getName();
+        this.profileImage = dto.getProfileImage();
 
         return this;
     }

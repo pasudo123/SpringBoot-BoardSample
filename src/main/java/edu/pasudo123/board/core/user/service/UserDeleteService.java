@@ -5,5 +5,8 @@ package edu.pasudo123.board.core.user.service;
  * Blog: https://pasudo123.tistory.com/
  * Email: oraedoa@gmail.com
  **/
-public class UserDeleteService {
+public interface UserDeleteService {
+
+    void deleteOneByRegistrationId(String registrationId);
+
 }

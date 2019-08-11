@@ -9,7 +9,9 @@ import edu.pasudo123.board.core.user.model.User;
  **/
 public interface UserFindService {
 
-    User findByUserId(String userId);
+    User currentUser();
+
+    User findByUserRegistrationId(String userRegistrationId);
 
     User findByEmail(String email);
 

@@ -9,7 +9,7 @@ import edu.pasudo123.board.core.user.model.User;
  * Blog: https://pasudo123.tistory.com/
  * Email: oraedoa@gmail.com
  **/
-public interface UserAddService {
+public interface UserCreateService {
 
     void addNewMyArticle(User user, Article article);
 

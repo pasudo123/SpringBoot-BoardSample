@@ -3,7 +3,7 @@ package edu.pasudo123.board.core.user.service.impl;
 import edu.pasudo123.board.core.user.exception.UserNotFoundException;
 import edu.pasudo123.board.core.user.model.User;
 import edu.pasudo123.board.core.user.repository.UserRepository;
-import edu.pasudo123.board.core.user.service.UserExternalService;
+import edu.pasudo123.board.core.user.service.UserExternalFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 @RequiredArgsConstructor
-public class UserExternalServiceImpl implements UserExternalService {
+public class UserExternalFindServiceImpl implements UserExternalFindService {
 
     private final UserRepository userRepository;
 

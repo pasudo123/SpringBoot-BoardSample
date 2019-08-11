@@ -14,13 +14,19 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 @RequiredArgsConstructor
-public class ByEmailUserFindServiceImpl implements UserFindService {
+public class UserFindServiceImpl implements UserFindService {
 
     private final UserRepository userRepository;
 
     @Override
-    public User findByUserId(String userId) {
-        return userRepository.findByUserId(userId)
+    public User currentUser() {
+
+        return null;
+    }
+
+    @Override
+    public User findByUserRegistrationId(String userRegistrationId) {
+        return userRepository.findByUserRegistrationId(userRegistrationId)
                 .orElseThrow(() -> new UserNotFoundException("현재 접속 유저는 존재하지 않습니다."));
     }
 

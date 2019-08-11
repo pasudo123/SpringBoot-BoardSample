@@ -7,7 +7,7 @@ import edu.pasudo123.board.core.user.model.User;
  * Blog: https://pasudo123.tistory.com/
  * Email: oraedoa@gmail.com
  **/
-public interface UserExternalService {
+public interface UserExternalFindService {
 
     User findByUserRegistrationId(String userRegistrationId);
 }
