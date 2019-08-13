@@ -48,10 +48,10 @@ public class Article extends BaseTimeEntity {
     private String content;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Comment> commentList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "USER_ID")
     private User writerUser;
 
@@ -82,11 +82,12 @@ public class Article extends BaseTimeEntity {
 
     public void setWriterUser(User user){
         this.writerUser = user;
-        this.writerUser.getArticleList().add(this);
+        getWriterUser().addNewArticle(this);
     }
 
     public void addNewComment(Comment comment){
         getCommentList().add(comment);
+        comment.setArticle(this);
     }
 
     public void removeComment(Comment comment){
@@ -94,6 +95,6 @@ public class Article extends BaseTimeEntity {
             return;
         }
 
-        commentList.remove(comment);
+        getCommentList().remove(comment);
     }
 }

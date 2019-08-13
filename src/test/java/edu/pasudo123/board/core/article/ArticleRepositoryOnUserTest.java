@@ -139,7 +139,7 @@ public class ArticleRepositoryOnUserTest {
                 .comment("첫번째 댓글을 달았습니다.")
                 .build();
         comment.setWriterUser(user);
-        comment.setArticle(article);
+        article.addNewComment(comment);
         testEntityManager.persist(comment);
         testEntityManager.flush();
 

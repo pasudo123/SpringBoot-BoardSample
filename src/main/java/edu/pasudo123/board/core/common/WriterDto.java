@@ -25,6 +25,13 @@ public class WriterDto {
     @JsonProperty("image")
     String profileImage;
 
+    @Builder
+    public WriterDto(String userRegistrationId, String name, String profileImage){
+        this.userRegistrationId = userRegistrationId;
+        this.name = name;
+        this.profileImage = profileImage;
+    }
+
     public WriterDto(User user){
         this.userRegistrationId = user.getUserRegistrationId();
         this.name = user.getName();

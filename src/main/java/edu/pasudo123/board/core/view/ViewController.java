@@ -20,25 +20,17 @@ import javax.servlet.http.HttpServletResponse;
 public class ViewController {
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @GetMapping("/success")
-    public void success(HttpServletResponse response) throws Exception{
-        response.sendRedirect("/home");
+    public void success(HttpServletResponse response) throws Exception {
+        response.sendRedirect("/article");
     }
 
-    @GetMapping("/home")
-    public String home(@CurrentUser CustomOAuth2User currentUser){
-
-        log.debug(currentUser.toString());
-
-        return "home";
-    }
-
-    @GetMapping("/arti**")
-    public String article(){
-        return "home";
+    @GetMapping("/article/**")
+    public String article() {
+        return "article";
     }
 }

@@ -30,7 +30,6 @@ public class ArticleCreateServiceImpl implements ArticleCreateService {
         User foundUser = userExternalFindService.findByUserRegistrationId(currentUser.getUserRegistrationId());
         Article article = dto.toEntity();
         article.setWriterUser(foundUser);
-
         Article savedArticle = articleRepository.save(article);
 
         return new ArticleOneResponseDto(savedArticle);

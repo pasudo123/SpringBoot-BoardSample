@@ -13,12 +13,12 @@ export default new Vuex.Store({
 
     state: {
         principal: {},
-    }
-    ,
+    },
     actions: {
         currentUser() {
+            console.debug("현재 유저 획득");
             return new Promise((resolve, reject) => {
-                instance.get(`/current-user`).then((response) => {
+                instance.get(`/auth/current-user`).then((response) => {
                     resolve(response);
                 }).catch((error) => {
                     reject(error);

@@ -24,7 +24,7 @@ public class UserDto {
         this.userRegistrationId = user.getUserRegistrationId();
         this.name = user.getName();
         this.email = user.getEmail();
-        this.profileImage = user.getEmail();
+        this.profileImage = user.getProfileImage();
         this.role = user.getRoleKey();
     }
 }

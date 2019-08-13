@@ -29,9 +29,10 @@
                         </div>
 
                         <div class="buttonWrapper">
-                            <button @click="updateProcess" class="updateButton">Update</button>
-
-                            <button @click="deleteProcess" class="deleteButton">Delete</button>
+                            <div v-if="">
+                                <button @click="updateProcess" class="updateButton">Update</button>
+                                <button @click="deleteProcess" class="deleteButton">Delete</button>
+                            </div>
                         </div>
 
                         <div class="commentWrapper">
@@ -81,7 +82,6 @@
             }
         },
         computed: {
-
             ...mapGetters([`article`]),
         },
         methods: {
@@ -119,7 +119,7 @@
                 payload.articleId = this.myArticle.id;
                 payload.comment = this.comment;
 
-                this.createComment(payload).then((response) => {
+                this.createComment(payload).then(() => {
                     this.fetchOneArticle(payload.articleId);
                     this.comment = '';
                 })
@@ -195,7 +195,8 @@
 
     div.buttonWrapper {
         text-align: right;
-        margin-bottom: 20px;
+        margin: 5px 0 20px 0;
+        height: 35px;
     }
 
     button.customButton {
@@ -216,7 +217,7 @@
         text-decoration: none;
         border-radius: 5px;
         padding: 8px 12px 8px 12px;
-        margin: 5px 15px 0 15px;
+        margin: 0 15px 0 15px;
     }
 
     button.updateButton:hover {
@@ -229,7 +230,6 @@
         text-decoration: none;
         border-radius: 5px;
         padding: 8px 12px 8px 12px;
-        margin: 5px 0 0 0;
     }
 
     button.deleteButton:hover {

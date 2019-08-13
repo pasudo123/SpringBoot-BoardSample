@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
  **/
 public interface ArticleFindService {
 
-    /** 아티클 서비스 레이어 **/
     Page<ArticleListResponseDto> findAll(final PageRequest pageable);
 
     ArticleOneResponseDto findOneById(final long articleId);

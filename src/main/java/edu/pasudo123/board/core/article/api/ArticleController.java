@@ -58,7 +58,7 @@ public class ArticleController {
     }
 
     @PatchMapping("article/{articleId}")
-    public ResponseEntity<?> updateOneById(@PathVariable Long articleId,
+    public ResponseEntity<ArticleOneResponseDto> updateOneById(@PathVariable Long articleId,
                                            @Valid @RequestBody ArticleOneRequestDto dto,
                                            BindingResult bindingResult) throws ValidationException {
 
@@ -70,7 +70,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("article/{articleId}")
-    public ResponseEntity<?> deleteOneById(@PathVariable Long articleId) {
+    public ResponseEntity<String> deleteOneById(@PathVariable Long articleId) {
 
         articleDeleteService.deleteOneById(articleId);
 

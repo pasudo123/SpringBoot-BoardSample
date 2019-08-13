@@ -64,7 +64,7 @@ public class User {
     }
 
     public void addNewArticle(Article article) {
-        article.setWriterUser(this);
+        getArticleList().add(article);
     }
 
     public void addNewComment(Comment comment){

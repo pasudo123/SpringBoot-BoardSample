@@ -6,21 +6,17 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify);
-
-import DateFilter from '@/common/date.filter'
-import ErrorFilter from '@/common/error.filter'
-
 Vue.config.productionTip = false;
-
-Vue.filter("date", DateFilter);
-Vue.filter("error", ErrorFilter);
 
 import '@/style/global.css'
 
 router.beforeEach((to, from, next) => {
-    console.debug("전역가드 호출");
 
-
+    store.dispatch(`currentUser`).then((response) => {
+        console.debug(response.data);
+    }).catch((error) => {
+        console.debug(error.response.data);
+    });
 
     next();
 });

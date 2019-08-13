@@ -19,13 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
  * Email: oraedoa@gmail.com
  **/
 @RestController
-@RequestMapping("/api")
-@RequiredArgsConstructor
-public class UserController {
+public class UserAuthController {
 
-    private final UserFindService userFindService;
-
-    @GetMapping("current-user")
+    @GetMapping("/auth/current-user")
     public ResponseEntity<UserDto> currentUser(@CurrentUser CustomOAuth2User currentUser){
 
         User user = currentUser.getUser();

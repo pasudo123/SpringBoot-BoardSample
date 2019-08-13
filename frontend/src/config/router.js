@@ -14,17 +14,17 @@ export default new VueRouter({
             component: () => import("@/pages/login/Login")
         },
         {
-            path: "/home",
+            path: "/article",
             name: "home",
             component: () => import("@/pages/home/Article"),
         },
         {
-            path: "/article-edit",
+            path: "/article/edit",
             name: "articleEdit",
             component: () => import("@/pages/home/ArticleEdit"),
         },
         {
-            path: "/article-view",
+            path: "/article/view",
             name: "articleView",
             component: () => import("@/pages/home/ArticleView"),
         },

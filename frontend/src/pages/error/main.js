@@ -1,15 +1,14 @@
-
 import Vue from 'vue'
-import Login from '@/pages/login/Login.vue'
+import App from '@/pages/error/App.vue'
 import router from '@/config/router'
 import store from '@/store/store'
 
+
 Vue.config.productionTip = false;
 
-import '@/style/global.css'
 
 new Vue({
     router,
     store,
-    render: h => h (Login)
+    render: h => h(App)
 }).$mount('#app');

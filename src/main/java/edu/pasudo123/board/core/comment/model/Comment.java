@@ -31,11 +31,11 @@ public class Comment extends BaseTimeEntity {
     private String comment;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "ARTICLE_ID")
     private Article article;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "USER_ID")
     private User writerUser;
 
@@ -46,11 +46,10 @@ public class Comment extends BaseTimeEntity {
 
     public void setArticle(Article article){
         this.article = article;
-        article.addNewComment(this);
     }
 
     public void setWriterUser(User user){
         this.writerUser = user;
-        user.addNewComment(this);
+        getWriterUser().addNewComment(this);
     }
 }

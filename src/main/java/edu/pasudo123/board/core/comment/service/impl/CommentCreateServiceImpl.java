@@ -30,10 +30,11 @@ public class CommentCreateServiceImpl implements CommentCreateService {
     @Override
     public CommentOneResponseDto addNewComment(CommentOneRequestDto dto, User currentUser) {
 
+        Comment comment = dto.toEntity();
+
         /** 아티클 X 댓글 :: Select Query **/
         Article article = articleExternalService.findOneById(dto.getArticleId());
-        Comment comment = dto.toEntity();
-        comment.setArticle(article);
+        article.addNewComment(comment);
 
         /** 댓글 X 유저 :: Select Query **/
         User foundUser = userExternalFindService.findByUserRegistrationId(currentUser.getUserRegistrationId());

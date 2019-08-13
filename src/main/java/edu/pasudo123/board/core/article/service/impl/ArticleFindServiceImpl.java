@@ -23,6 +23,8 @@ public class ArticleFindServiceImpl implements ArticleFindService {
 
     private final ArticleRepository articleRepository;
 
+
+
     @Transactional(readOnly = true)
     @Override
     public Page<ArticleListResponseDto> findAll(PageRequest pageable) {

@@ -1,6 +1,5 @@
 <template>
     <div id="article">
-        <h2>{{this.url}}</h2>
         <ArticleList></ArticleList>
     </div>
 </template>
@@ -16,9 +15,8 @@
         components: {Footer, Header, ArticleList},
         data() {
             return {
-                url: process.env.VUE_APP_URL
             }
-        }
+        },
     }
 </script>
 

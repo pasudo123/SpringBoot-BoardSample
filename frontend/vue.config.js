@@ -7,14 +7,16 @@ function resolve(dir) {
 module.exports = {
 
     devServer: {
-        hot: true,
-        open: true,
         port: 8888,
 
         proxy: {
-            '/': {
+            '/auth': {
                 target: 'http://localhost:8080'
-            }
+            },
+            '/api': {
+                target: 'http://localhost:8080'
+            },
+
         }
     },
 
@@ -23,7 +25,31 @@ module.exports = {
             alias: {
                 '@': resolve('src')
             }
-        }
+        },
+    },
+
+    chainWebpack: config => {
+        config.optimization.splitChunks({
+            cacheGroups: {
+                login: {
+                    name: `chunk-login-vendors`,
+                    chunks: chunk => chunk.name === 'login',
+                    enforce: true,
+                },
+                home: {
+                    name: `chunk-article-vendors`,
+                    chunks: chunk => chunk.name === 'article',
+                    enforce: true,
+                },
+                common: {
+                    name: 'chunk-common',
+                    chunks: 'initial',
+                    minChunks: 2,
+                    reuseExistingChunk: true,
+                    enforce: true,
+                }
+            }
+        })
     },
 
     publicPath: '/',
@@ -33,12 +59,14 @@ module.exports = {
         login: {
             entry: './src/pages/login/main.js',
             template: 'public/index.html',
-            filename: './templates/login.ftl'
+            filename: './templates/login.ftl',
+            chunks: ['chunk-common', 'chunk-login-vendors', 'login']
         },
-        home: {
+        article: {
             entry: './src/pages/home/main.js',
             template: 'public/index.html',
-            filename: './templates/home.ftl'
+            filename: './templates/article.ftl',
+            chunks: ['chunk-common', 'chunk-article-vendors', 'article']
         },
     },
 };

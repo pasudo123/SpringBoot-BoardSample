@@ -29,6 +29,13 @@ public class ArticleOneRequestDto {
     @NotNull(message = "Content is required.")
     private String content;
 
+    @Builder
+    public ArticleOneRequestDto(String title, ArticleType articleType, String content){
+        this.title = title;
+        this.articleType = articleType;
+        this.content = content;
+    }
+
     public Article toEntity() {
         return Article.builder()
                 .title(title)
