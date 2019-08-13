@@ -1,17 +1,17 @@
 package edu.pasudo123.board.core.article.api;
 
+import edu.pasudo123.board.core.article.dto.ArticleListResponseDto;
 import edu.pasudo123.board.core.article.dto.ArticleOneRequestDto;
 import edu.pasudo123.board.core.article.dto.ArticleOneResponseDto;
-import edu.pasudo123.board.core.article.dto.ArticleResponseDto;
-import edu.pasudo123.board.core.global.exception.ValidationException;
-import edu.pasudo123.board.core.article.service.ArticleService;
+import edu.pasudo123.board.core.article.service.*;
 import edu.pasudo123.board.core.common.PageRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import edu.pasudo123.board.core.config.auth.CurrentUser;
+import edu.pasudo123.board.core.config.auth.CustomOAuth2User;
+import edu.pasudo123.board.core.global.exception.ValidationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,52 +23,56 @@ import javax.validation.Valid;
  **/
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ArticleController {
 
-    @Autowired
-    public ArticleService articleService;
+    private final ArticleCreateService articleCreateService;
+    private final ArticleFindService articleFindService;
+    private final ArticleUpdateService articleUpdateService;
+    private final ArticleDeleteService articleDeleteService;
 
     @PostMapping("article")
-    public ResponseEntity<ArticleOneResponseDto> saveArticle(@Valid @RequestBody ArticleOneRequestDto dto,
+    public ResponseEntity<ArticleOneResponseDto> saveArticle(@CurrentUser CustomOAuth2User customOAuth2User,
+                                                             @Valid @RequestBody ArticleOneRequestDto dto,
                                                              BindingResult bindingResult) throws ValidationException {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new ValidationException("Validation Result Failed.", bindingResult);
         }
 
-        return ResponseEntity.ok().body(articleService.addNewArticle(dto));
+        return ResponseEntity.ok().body(articleCreateService.addNewArticle(dto, customOAuth2User.getUser()));
     }
 
     @GetMapping("article")
-    public ResponseEntity<Page<ArticleResponseDto>> findAll(final PageRequest pageable){
+    public ResponseEntity<Page<ArticleListResponseDto>> findAll(final PageRequest pageable) {
 
         pageable.setStandard("descIndex");
 
-        return ResponseEntity.ok().body(articleService.findAll(pageable));
+        return ResponseEntity.ok().body(articleFindService.findAll(pageable));
     }
 
     @GetMapping("article/{articleId}")
-    public ResponseEntity<ArticleOneResponseDto> findOneById(@PathVariable Long articleId){
+    public ResponseEntity<ArticleOneResponseDto> findOneById(@PathVariable Long articleId) {
 
-        return ResponseEntity.ok().body(articleService.findOneById(articleId));
+        return ResponseEntity.ok().body(articleFindService.findOneById(articleId));
     }
 
     @PatchMapping("article/{articleId}")
-    public ResponseEntity<?> updateOneById(@PathVariable Long articleId,
+    public ResponseEntity<ArticleOneResponseDto> updateOneById(@PathVariable Long articleId,
                                            @Valid @RequestBody ArticleOneRequestDto dto,
                                            BindingResult bindingResult) throws ValidationException {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new ValidationException("Validation Result Failed.", bindingResult);
         }
 
-        return ResponseEntity.ok().body(articleService.updateOneById(articleId, dto));
+        return ResponseEntity.ok().body(articleUpdateService.updateOneById(articleId, dto));
     }
 
     @DeleteMapping("article/{articleId}")
-    public ResponseEntity<?> deleteOneById(@PathVariable Long articleId){
+    public ResponseEntity<String> deleteOneById(@PathVariable Long articleId) {
 
-        articleService.deleteOneById(articleId);
+        articleDeleteService.deleteOneById(articleId);
 
         return ResponseEntity.ok().body("Success");
     }

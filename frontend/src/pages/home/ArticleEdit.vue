@@ -62,10 +62,7 @@
     export default {
         name: "ArticleEdit",
         computed: {
-            ...mapGetters(`articleModule`, {
-                article: `article`,
-                isUpdate: `isUpdate`
-            })
+            ...mapGetters([`article`, `isUpdate`]),
         },
         data() {
 
@@ -81,13 +78,8 @@
         },
         methods: {
 
-            ...mapActions(`articleModule`, [
-                'createArticle', `updateOneArticle`
-            ]),
-
-            ...mapMutations(`articleModule`, [
-                `toggleIsUpdate`, `fetchOneArticle`
-            ]),
+            ...mapActions(['createArticle', `updateOneArticle`]),
+            ...mapMutations([`toggleIsUpdate`, `fetchOneArticle`]),
 
             offUpdate() {
                 if (this.isUpdate) {

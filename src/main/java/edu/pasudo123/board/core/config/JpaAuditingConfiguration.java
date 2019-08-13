@@ -1,8 +1,6 @@
 package edu.pasudo123.board.core.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
@@ -11,12 +9,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  * Email: oraedoa@gmail.com
  **/
 @Configuration
-@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+@EnableJpaAuditing
 public class JpaAuditingConfiguration {
 
-    @Bean
-    public AuditorAware<String> auditorAware(){
-        return new JpaAuditorAware();
-    }
+    /**  CreatedBy 사용 안하기 **/
+//    @Bean
+//    public AuditorAware<String> auditorAware(){
+//        return new JpaAuditorAware();
+//    }
 
 }

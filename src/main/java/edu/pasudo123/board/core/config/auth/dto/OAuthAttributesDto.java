@@ -17,15 +17,15 @@ import java.util.Map;
 public class OAuthAttributesDto {
 
     private Map<String, Object> attributes;
-    private String userId;
+    private String userRegistrationId;
     private String name;
     private String email;
     private String profileImage;
 
     @Builder
-    public OAuthAttributesDto(Map<String, Object> attributes, String userId, String name, String email, String profileImage){
+    public OAuthAttributesDto(Map<String, Object> attributes, String userRegistrationId, String name, String email, String profileImage){
         this.attributes = attributes;
-        this.userId = userId;
+        this.userRegistrationId = userRegistrationId;
         this.name = name;
         this.email = email;
         this.profileImage = profileImage;
@@ -34,19 +34,19 @@ public class OAuthAttributesDto {
 
     public static OAuthAttributesDto of(String registrationId, Map<String, Object> attributes){
 
-        String userId = "";
+        String userRegistrationId = "";
 
         for(AuthType type : AuthType.values()){
             if(!type.name().equalsIgnoreCase(registrationId)){
                 continue;
             }
 
-            userId = type.name().toUpperCase() + "_" + attributes.get("sub");
+            userRegistrationId = type.name().toUpperCase() + "_" + attributes.get("sub");
         }
 
         return OAuthAttributesDto.builder()
                 .attributes(attributes)
-                .userId(userId)
+                .userRegistrationId(userRegistrationId)
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .profileImage((String) attributes.get("picture"))
@@ -55,7 +55,7 @@ public class OAuthAttributesDto {
 
     public User toEntity(){
         return User.builder()
-                .userId(userId)
+                .userRegistrationId(userRegistrationId)
                 .name(name)
                 .email(email)
                 .profileImage(profileImage)

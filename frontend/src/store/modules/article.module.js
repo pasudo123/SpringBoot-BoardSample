@@ -3,8 +3,6 @@ import instance from '@/config/request'
 
 export default {
 
-    namespaced: true,
-
     state: {
         article: {},
         articleList: [],

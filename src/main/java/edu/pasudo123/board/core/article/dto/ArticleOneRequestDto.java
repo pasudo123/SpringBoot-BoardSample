@@ -43,5 +43,4 @@ public class ArticleOneRequestDto {
                 .content(content)
                 .build();
     }
-
 }

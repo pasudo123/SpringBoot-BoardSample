@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import App from '@/pages/home/App.vue'
 import router from '@/config/router'
@@ -7,19 +6,23 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify);
-
-import DateFilter from '@/common/date.filter'
-import ErrorFilter from '@/common/error.filter'
-
 Vue.config.productionTip = false;
 
-Vue.filter("date", DateFilter);
-Vue.filter("error", ErrorFilter);
-
 import '@/style/global.css'
+
+router.beforeEach((to, from, next) => {
+
+    store.dispatch(`currentUser`).then((response) => {
+        console.debug(response.data);
+    }).catch((error) => {
+        console.debug(error.response.data);
+    });
+
+    next();
+});
 
 new Vue({
     router,
     store,
-    render: h => h (App)
+    render: h => h(App)
 }).$mount('#app');

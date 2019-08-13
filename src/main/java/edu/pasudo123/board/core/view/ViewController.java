@@ -1,5 +1,7 @@
 package edu.pasudo123.board.core.view;
 
+import edu.pasudo123.board.core.config.auth.CurrentUser;
+import edu.pasudo123.board.core.config.auth.CustomOAuth2User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,22 +20,17 @@ import javax.servlet.http.HttpServletResponse;
 public class ViewController {
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @GetMapping("/success")
-    public void success(HttpServletResponse response) throws Exception{
-        response.sendRedirect("/home");
+    public void success(HttpServletResponse response) throws Exception {
+        response.sendRedirect("/article");
     }
 
-    @GetMapping("/home")
-    public String home(){
-        return "home";
-    }
-
-    @GetMapping("/arti**")
-    public String article(){
-        return "home";
+    @GetMapping("/article/**")
+    public String article() {
+        return "article";
     }
 }

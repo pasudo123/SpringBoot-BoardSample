@@ -28,9 +28,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .frameOptions().disable();
 
         http.authorizeRequests()
-                .antMatchers("/error", "/favicon.ico", "/**/*.jpg", "/**/*.png", "/**/*.css", "/**/*.js")
+                .antMatchers("/error", "/favicon.ico", "/**/*.jpg", "/**/*.png", "/**/*.css", "/**/*.js", "/**/*.map")
                     .permitAll()
-                .antMatchers("/login/**", "/h2-console/**")
+                .antMatchers("/login/**", "/auth/**", "/h2-console/**")
                     .permitAll();
 
         http.authorizeRequests()
