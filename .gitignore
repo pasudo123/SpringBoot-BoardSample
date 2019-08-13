@@ -221,9 +221,6 @@ buildNumber.properties
 # TODO: where does this rule come from?
 docs/_book
 
-# TODO: where does this rule come from?
-test/
-
 ### Vuejs ###
 # Recommended template: Node.gitignore
 
@@ -252,3 +249,6 @@ gradle-app.setting
 **/build/
 
 # End of https://www.gitignore.io/api/vue,java,vuejs,maven,gradle,java-web,code-java,jetbrains,jetbrains+iml
+
+# vue webpack build, gitignore
+src/main/resources/static/static/
