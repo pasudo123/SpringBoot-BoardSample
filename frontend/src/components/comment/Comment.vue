@@ -7,10 +7,11 @@
                     color="primary"
             ></v-progress-circular>
         </div>
+
         <div v-else>
             <v-list>
                 <v-list-tile
-                        v-for="comment of this.commentList"
+                        v-for="(comment, index) in this.commentList"
                         :key="comment.id"
                         avatar
                         class="commentElement"
@@ -19,12 +20,20 @@
                         <img :src="comment.writer.image">
                     </v-list-tile-avatar>
 
-                    <v-list-tile-content>
+                    <v-list-tile-content v-if="!isModify(comment)">
                         <v-list-tile-title>{{comment.comment}}</v-list-tile-title>
                         <v-list-tile-sub-title>{{ comment.createDate }}</v-list-tile-sub-title>
                     </v-list-tile-content>
-                    <div class="settingWrapper">
-                        <span class="spanBtn modifyBtn" @click="modifyProcess">수정</span>
+
+                    <comment-input
+                            v-if="isModify(comment)"
+                            :isModify="true"
+                            :modifyComment="comment.comment"
+                            :modifyIndex="index"
+                    />
+
+                    <div v-if="hasCurrentUser(comment.writer)" class="settingWrapper">
+                        <span class="spanBtn modifyBtn" @click="modifyProcess(comment, index)">수정</span>
                         <br>
                         <span class="spanBtn deleteBtn" @click="deleteProcess(comment.id)">삭제</span>
                     </div>
@@ -36,6 +45,7 @@
 
 <script>
 
+    import CommentInput from '@/components/comment/CommentInput'
     import {mapActions, mapGetters} from 'vuex'
 
     const map = new Map();
@@ -45,7 +55,9 @@
         props: {
             commentList: {type: Array, required: false, default: []}
         },
+        components: {CommentInput},
         computed: {
+            ...mapGetters([`currentUser`]),
             ...mapGetters([`article`]),
         },
         data() {
@@ -58,16 +70,29 @@
             ...mapActions([`fetchOneArticle`]),
             ...mapActions([`deleteComment`]),
 
-            modifyProcess() {
-                console.debug("수정");
+            hasCurrentUser(writer) {
+                return (writer.registrationId === this.currentUser.registrationId)
+            },
+
+            isModify(comment) {
+                /** 수정 버튼을 한번씩 누를 때마다 작동 **/
+                if (comment.isModify === undefined){
+                    return false;
+                }
+
+                return (comment.isModify);
+            },
+
+            modifyProcess(comment, index) {
+                this.$set(this.commentList[index], 'isModify', true);
             },
 
             deleteProcess(commentId) {
 
-                if (map.has(commentId)){
+                if (map.has(commentId)) {
                     return;
                 }
-                
+
                 map.set(commentId, 1);
                 this.deleteComment(commentId).then(() => {
                     this.fetchOneArticle(this.article.id).then(() => {

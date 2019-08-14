@@ -3,6 +3,7 @@ package edu.pasudo123.board.core.comment.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.pasudo123.board.core.article.model.Article;
+import edu.pasudo123.board.core.comment.dto.CommentOneRequestDto;
 import edu.pasudo123.board.core.common.BaseTimeEntity;
 import edu.pasudo123.board.core.user.model.User;
 import lombok.AccessLevel;
@@ -42,6 +43,10 @@ public class Comment extends BaseTimeEntity {
     @Builder
     public Comment(String comment){
         this.comment = comment;
+    }
+
+    public void updateComment(CommentOneRequestDto dto){
+        this.comment = dto.getComment();
     }
 
     public void setArticle(Article article){
