@@ -18,12 +18,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentUpdateServiceImpl implements CommentUpdateService {
 
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
     @Override
-    public CommentOneResponseDto updateOnById(long commentId, CommentOneRequestDto dto) {
+    public CommentOneResponseDto updateOnById(final long commentId, CommentOneRequestDto dto) {
 
-        Comment comment = commentRepository.findById(commentId)
+            Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("해당 코멘트는 존재하지 않습니다."));
 
         comment.updateComment(dto);

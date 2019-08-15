@@ -25,17 +25,24 @@
                         <v-list-tile-sub-title>{{ comment.createDate }}</v-list-tile-sub-title>
                     </v-list-tile-content>
 
-                    <comment-input
-                            v-if="isModify(comment)"
-                            :isModify="true"
-                            :modifyComment="comment.comment"
-                            :modifyIndex="index"
-                    />
+                    <!-- 코멘트 수정 시 변경내용 -->
+                    <v-list-tile-content v-else>
+                        <comment-input
+                                :isModify="true"
+                                :propsComment="comment.comment"
+                                :propsCommentId="comment.id"
+                                :propsIndex="index"
+                                @settingModify="settingModify"
+                                @updatingComment="updatingComment"
+                        />
+                    </v-list-tile-content>
 
-                    <div v-if="hasCurrentUser(comment.writer)" class="settingWrapper">
-                        <span class="spanBtn modifyBtn" @click="modifyProcess(comment, index)">수정</span>
-                        <br>
-                        <span class="spanBtn deleteBtn" @click="deleteProcess(comment.id)">삭제</span>
+                    <div v-if="hasCurrentUser(comment.writer)">
+                        <div v-if="!isModify(comment)">
+                            <span class="spanBtn-origin upperBtn modifyBtn" @click="settingModify({index: index})">수정</span>
+                            <br>
+                            <span class="spanBtn-origin downBtn deleteBtn" @click="deleteProcess(comment.id)">삭제</span>
+                        </div>
                     </div>
                 </v-list-tile>
             </v-list>
@@ -68,23 +75,10 @@
         },
         methods: {
             ...mapActions([`fetchOneArticle`]),
-            ...mapActions([`deleteComment`]),
+            ...mapActions([`deleteComment`, `modifyComment`]),
 
             hasCurrentUser(writer) {
                 return (writer.registrationId === this.currentUser.registrationId)
-            },
-
-            isModify(comment) {
-                /** 수정 버튼을 한번씩 누를 때마다 작동 **/
-                if (comment.isModify === undefined){
-                    return false;
-                }
-
-                return (comment.isModify);
-            },
-
-            modifyProcess(comment, index) {
-                this.$set(this.commentList[index], 'isModify', true);
             },
 
             deleteProcess(commentId) {
@@ -98,6 +92,44 @@
                     this.fetchOneArticle(this.article.id).then(() => {
                         map.delete(commentId);
                     })
+                });
+            },
+
+            isModify(comment) {
+                /** 수정 버튼을 한번씩 누를 때마다 작동 **/
+                if (comment.isModify === undefined) {
+                    return false;
+                }
+
+                return (comment.isModify);
+            },
+
+            settingModify(params) {
+
+                if (this.commentList[params.index].isModify === undefined){
+                    this.$set(this.commentList[params.index], 'isModify', true);
+                    return;
+                }
+
+                let isModified = this.commentList[params.index].isModify;
+                this.$set(this.commentList[params.index], 'isModify', !isModified);
+            },
+
+            updatingComment(params) {
+                /** 코멘트 수정시 전달 받은 내용 **/
+                this.$set(this.commentList[params.index], 'comment', params.comment);
+                this.modifyProcess(this.commentList[params.index], params.index);
+            },
+
+            modifyProcess(comment, index) {
+                const params = {};
+                params.index = index;
+                params.articleId = this.article.id;
+                params.comment = comment.comment;
+                params.commentId = comment.id;
+
+                this.modifyComment(params).then((response) => {
+                    this.settingModify(params);
                 });
             }
         }
@@ -116,25 +148,24 @@
         padding: 5px 0 5px 0;
     }
 
-    span.spanBtn:hover {
+    span.spanBtn-origin {
+        display: inline-block;
+        padding: 2px 7px 2px 7px;
+        border: 1px solid darkgreen;
+        font-size: 14px;
         cursor: pointer;
+    }
+
+    span.spanBtn-origin:hover {
         background-color: darkgreen;
         color: white;
     }
 
-    span.modifyBtn {
-        display: inline-block;
-        padding: 2px 7px 2px 7px;
-        border: 1px solid darkgreen;
-        font-size: 14px;
+    span.upperBtn {
         margin-bottom: 2px;
     }
 
-    span.deleteBtn {
-        display: inline-block;
-        padding: 2px 7px 2px 7px;
-        border: 1px solid darkgreen;
-        font-size: 14px;
+    span.downBtn {
         margin-top: 2px;
     }
 </style>

@@ -60,7 +60,7 @@ public class ArticleController {
     @PatchMapping("article/{articleId}")
     public ResponseEntity<ArticleOneResponseDto> updateOneById(@PathVariable Long articleId,
                                            @Valid @RequestBody ArticleOneRequestDto dto,
-                                           BindingResult bindingResult) throws ValidationException {
+                                           BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new ValidationException("Validation Result Failed.", bindingResult);

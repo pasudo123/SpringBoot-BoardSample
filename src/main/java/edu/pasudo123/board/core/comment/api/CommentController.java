@@ -30,31 +30,32 @@ public class CommentController {
     private final CommentUpdateService commentUpdateService;
     private final CommentDeleteService commentDeleteService;
 
-    @PostMapping("/comment")
+    @PostMapping("comment")
     public ResponseEntity<CommentOneResponseDto> saveComment(@CurrentUser CustomOAuth2User customOAuth2User,
                                                              @Valid @RequestBody CommentOneRequestDto dto,
                                                              BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new ValidationException("Validation Result Failed.", bindingResult);
         }
 
-        return ResponseEntity.ok().body(commentCreateService.addNewComment(dto,customOAuth2User.getUser()));
+        return ResponseEntity.ok().body(commentCreateService.addNewComment(dto, customOAuth2User.getUser()));
     }
 
-    @PatchMapping("/comment/{commentId}")
-    public ResponseEntity<CommentOneResponseDto> updateOnById(@PathVariable long commentId,
-                             @Valid @RequestBody CommentOneRequestDto dto, BindingResult bindingResult) {
+    @PatchMapping("comment/{commentId}")
+    public ResponseEntity<CommentOneResponseDto> updateOneById(@PathVariable Long commentId,
+                                                               @Valid @RequestBody CommentOneRequestDto dto,
+                                                               BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             throw new ValidationException("Validation Result Failed.", bindingResult);
         }
 
         return ResponseEntity.ok().body(commentUpdateService.updateOnById(commentId, dto));
     }
 
-    @DeleteMapping("/comment/{commentId}")
-    public ResponseEntity<String> deleteOneById(@PathVariable long commentId){
+    @DeleteMapping("comment/{commentId}")
+    public ResponseEntity<String> deleteOneById(@PathVariable long commentId) {
 
         commentDeleteService.deleteOneById(commentId);
 

@@ -77,7 +77,7 @@
         },
         methods: {
             ...mapActions([`createComment`]),
-            ...mapActions(['deleteOneArticle']),
+            ...mapActions([`fetchOneArticle`, 'deleteOneArticle']),
             ...mapMutations([`toggleIsUpdate`]),
 
             parseType(type) {
@@ -105,6 +105,9 @@
                 })
             },
         },
+        created() {
+            this.fetchOneArticle(this.article.id);
+        }
     }
 </script>
 

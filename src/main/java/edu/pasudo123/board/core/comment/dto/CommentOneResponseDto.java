@@ -3,7 +3,9 @@ package edu.pasudo123.board.core.comment.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.pasudo123.board.core.comment.model.Comment;
 import edu.pasudo123.board.core.common.WriterDto;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
  * Email: oraedoa@gmail.com
  **/
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentOneResponseDto {
 
     private Long id;
