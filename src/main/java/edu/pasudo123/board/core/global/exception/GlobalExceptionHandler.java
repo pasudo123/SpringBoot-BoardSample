@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,6 +27,20 @@ import java.util.Locale;
  **/
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, WebRequest request){
+
+        String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
+
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .message(ex.getLocalizedMessage())
+                .errors(Arrays.asList(error))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<CustomErrorResponse> handleBindException(ValidationException ex, Locale locale, WebRequest request){

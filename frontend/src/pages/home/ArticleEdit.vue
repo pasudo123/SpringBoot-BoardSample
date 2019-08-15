@@ -8,21 +8,18 @@
                             <div class="title">
                                 Article
                             </div>
-
                             <div class="articleMetaWrapper">
                                 <v-app style="height: 0">
-                                    <div>
-                                        <v-select
-                                                color="2F4F4F"
-                                                v-model="select"
-                                                :hint="'Article TYPE'"
-                                                :items="types"
-                                                item-text="name"
-                                                item-value="type"
-                                                persistent-hint
-                                                single-line
-                                        ></v-select>
-                                    </div>
+                                    <v-select
+                                            color="2F4F4F"
+                                            v-model="select"
+                                            :hint="'Article TYPE'"
+                                            :items="types"
+                                            item-text="name"
+                                            item-value="type"
+                                            persistent-hint
+                                            single-line
+                                    ></v-select>
                                 </v-app>
 
                                 <div>

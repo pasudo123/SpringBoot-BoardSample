@@ -24,7 +24,7 @@
         methods: {
             loginProcess() {
 
-                const API_BASE_URI = `http://localhost:8080`;
+                const API_BASE_URI = process.env.VUE_APP_BASE_API;
                 const GOOGLE_AUTH_URI = `${API_BASE_URI}/oauth2/authorization/google`;
 
                 window.location.href = GOOGLE_AUTH_URI;

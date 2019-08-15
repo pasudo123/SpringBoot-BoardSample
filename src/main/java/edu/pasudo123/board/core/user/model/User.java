@@ -1,5 +1,6 @@
 package edu.pasudo123.board.core.user.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import edu.pasudo123.board.core.article.model.Article;
 import edu.pasudo123.board.core.comment.model.Comment;
 import edu.pasudo123.board.core.config.auth.dto.OAuthAttributesDto;
@@ -47,10 +48,11 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "writerUser", fetch = FetchType.LAZY)
     List<Article> articleList = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "writerUser", fetch = FetchType.LAZY)
     List<Comment> commentList = new ArrayList<>();
 

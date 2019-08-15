@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by pasudo123 on 2019-07-31
@@ -18,14 +19,16 @@ public class CustomErrorResponse <T> {
     private HttpStatus status;
     private String message;
     private String details;
+    private List<String> errors;
     private T data;
 
     @Builder
-    public CustomErrorResponse(HttpStatus status, String message, String details, T data){
+    public CustomErrorResponse(HttpStatus status, String message, String details, List<String> errors, T data){
         this.timestamp = LocalDateTime.now();
         this.status = status;
         this.message = message;
         this.details = details;
+        this.errors = errors;
         this.data = data;
     }
 }

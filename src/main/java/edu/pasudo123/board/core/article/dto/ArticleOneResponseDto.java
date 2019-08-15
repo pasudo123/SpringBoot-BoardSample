@@ -45,12 +45,8 @@ public class ArticleOneResponseDto {
             return;
         }
 
-        if(commentList == null){
-            this.commentList = new ArrayList<>();
-        }
-
-        for(Comment comment : article.getCommentList()){
-            commentList.add(new CommentOneResponseDto(comment));
+        for(Comment element : article.getCommentList()){
+            commentList.add(new CommentOneResponseDto(element));
         }
     }
 }
