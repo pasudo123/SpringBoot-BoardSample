@@ -1,6 +1,7 @@
 package edu.pasudo123.board.core.global.exception;
 
 import edu.pasudo123.board.core.article.exception.ArticleNotFoundException;
+import edu.pasudo123.board.core.comment.exception.CommentNotFoundException;
 import edu.pasudo123.board.core.user.exception.UserNotFoundException;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,6 +28,20 @@ import java.util.Locale;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, WebRequest request){
+
+        String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
+
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .message(ex.getLocalizedMessage())
+                .errors(Arrays.asList(error))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<CustomErrorResponse> handleBindException(ValidationException ex, Locale locale, WebRequest request){
 
@@ -35,8 +52,7 @@ public class GlobalExceptionHandler {
             stringBuffer.append(error.getDefaultMessage() + "\n");
         });
 
-        CustomErrorResponse errorResponse =
-                CustomErrorResponse.builder()
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST)
                 .message(stringBuffer.toString())
                 .details(request.getDescription(false))
@@ -48,8 +64,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ArticleNotFoundException.class)
     public ResponseEntity<CustomErrorResponse> articleNotFoundException(ArticleNotFoundException ex, WebRequest request){
 
-        CustomErrorResponse errorResponse =
-                CustomErrorResponse.builder()
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND)
                 .message(ex.getMessage())
                 .details(request.getDescription(false))
@@ -61,8 +76,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<CustomErrorResponse> userNotFoundException(UserNotFoundException ex, WebRequest request){
 
-        CustomErrorResponse errorResponse =
-                CustomErrorResponse.builder()
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND)
                 .message(ex.getMessage())
                 .details(request.getDescription(false))
@@ -70,4 +84,17 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<CustomErrorResponse> CommentNotFoundException(CommentNotFoundException ex, WebRequest request){
+
+        CustomErrorResponse errorResponse = CustomErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND)
+                .message(ex.getMessage())
+                .details(request.getDescription(false))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
 }

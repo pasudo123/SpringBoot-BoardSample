@@ -16,39 +16,26 @@
                         <div class="articleMetaWrapper">
                             <div>
                                 <div class="titleWrapper">
-                                    <span class="typeWrapper">[ {{this.parseType(this.myArticle.articleType)}} ]</span>
+                                    <span class="typeWrapper">[ {{this.parseType(this.article.articleType)}} ]</span>
                                     <br>
-                                    <h2 class="articleTitle">{{this.myArticle.title}}</h2>
+                                    <h2 class="articleTitle">{{this.article.title}}</h2>
                                 </div>
                             </div>
                         </div>
 
                         <div class="contentWrapper">
-                            <div class="contentArea" v-html="this.myArticle.content">
+                            <div class="contentArea" v-html="this.article.content">
                             </div>
                         </div>
 
                         <div class="buttonWrapper">
-                            <div v-if="">
+                            <div v-if="hasCurrentUser">
                                 <button @click="updateProcess" class="updateButton">Update</button>
                                 <button @click="deleteProcess" class="deleteButton">Delete</button>
                             </div>
                         </div>
 
-                        <div class="commentWrapper">
-                            <v-text-field
-                                    color="blue"
-                                    label="댓글작성"
-                                    type="text"
-                                    @keyup.enter="addNewComment"
-                                    v-model="comment"
-                            ></v-text-field>
-                            <div class="commentButtonWrapper">
-                                <button @click="addNewComment" class="commentBtn">
-                                    등록
-                                </button>
-                            </div>
-                        </div>
+                        <comment-input />
 
                         <Comment
                                 :commentList="article.commentList"
@@ -63,6 +50,7 @@
 <script>
 
     import Comment from '@/components/comment/Comment'
+    import CommentInput from '@/components/comment/CommentInput'
 
     import {createHelpers} from 'vuex-map-fields'
     import {mapActions, mapGetters, mapMutations} from 'vuex'
@@ -74,19 +62,22 @@
 
     export default {
         name: "ArticleView",
-        components: {Comment},
-        data() {
-            return {
-                myArticle: {},
-                comment: '',
-            }
-        },
+        components: {Comment, CommentInput},
         computed: {
+            ...mapGetters([`currentUser`]),
             ...mapGetters([`article`]),
+            hasCurrentUser() {
+
+                if (Object.keys(this.article).length === 0) {
+                    return false;
+                }
+
+                return (this.article.writer.registrationId === this.currentUser.registrationId)
+            },
         },
         methods: {
             ...mapActions([`createComment`]),
-            ...mapActions(['fetchOneArticle', 'deleteOneArticle']),
+            ...mapActions([`fetchOneArticle`, 'deleteOneArticle']),
             ...mapMutations([`toggleIsUpdate`]),
 
             parseType(type) {
@@ -113,20 +104,9 @@
                     this.goList();
                 })
             },
-
-            addNewComment() {
-                const payload = {};
-                payload.articleId = this.myArticle.id;
-                payload.comment = this.comment;
-
-                this.createComment(payload).then(() => {
-                    this.fetchOneArticle(payload.articleId);
-                    this.comment = '';
-                })
-            }
         },
         created() {
-            this.myArticle = this.article;
+            this.fetchOneArticle(this.article.id);
         }
     }
 </script>
@@ -169,28 +149,6 @@
         padding: 15px;
         border-top: 1px solid grey;
         border-bottom: 1px solid grey;
-    }
-
-    div.commentWrapper {
-        margin-top: 50px;
-        margin-bottom: 10px;
-    }
-
-
-    div.commentButtonWrapper {
-        text-align: right;
-    }
-
-    button.commentBtn {
-        padding: 5px 12px 5px 12px;
-        border-radius: 5px;
-        background-color: #b26138;
-        color: white;
-        position: relative;
-    }
-
-    button.commentBtn:hover {
-        background-color: #7e4528;
     }
 
     div.buttonWrapper {

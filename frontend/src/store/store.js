@@ -12,23 +12,27 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 
     state: {
-        principal: {},
+        currentUser: {},
     },
     actions: {
-        currentUser() {
-            console.debug("현재 유저 획득");
+        currentUser({commit}) {
             return new Promise((resolve, reject) => {
                 instance.get(`/auth/current-user`).then((response) => {
-                    resolve(response);
+                    commit(`setCurrentUser`, response.data);
+                    resolve();
                 }).catch((error) => {
                     reject(error);
                 })
             });
         }
     },
-    mutations: {},
+    mutations: {
+        setCurrentUser(state, currentUser){
+            state.currentUser = currentUser;
+        }
+    },
     getters: {
-
+        currentUser: state => state.currentUser,
     },
 
     plugins: [

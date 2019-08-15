@@ -1,7 +1,6 @@
 package edu.pasudo123.board.core.comment.dto;
 
 import edu.pasudo123.board.core.comment.model.Comment;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,21 +8,21 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 
 /**
- * Created by pasudo123 on 2019-08-04
+ * Created by pasudo123 on 2019-08-15
  * Blog: https://pasudo123.tistory.com/
  * Email: oraedoa@gmail.com
  **/
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CommentOneRequestDto {
+@NoArgsConstructor
+public class CommentXXOneRequestDto {
 
-    private Long articleId;
+    private Long commentId;
 
     @NotBlank(message = "comment is not Empty.")
     private String comment;
 
     @Builder
-    public CommentOneRequestDto(String comment){
+    public CommentXXOneRequestDto(String comment) {
         this.comment = comment;
     }
 

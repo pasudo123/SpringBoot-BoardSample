@@ -12,10 +12,9 @@ import '@/style/global.css'
 
 router.beforeEach((to, from, next) => {
 
-    store.dispatch(`currentUser`).then((response) => {
-        console.debug(response.data);
-    }).catch((error) => {
-        console.debug(error.response.data);
+    store.dispatch(`currentUser`).catch((error) => {
+        console.error(error.response.data);
+        /** TODO 회원을 못 찾았기 때문에 로그인 페이지 이동 여부 확인 **/
     });
 
     next();

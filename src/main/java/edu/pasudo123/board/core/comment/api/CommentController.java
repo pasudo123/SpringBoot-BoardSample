@@ -4,6 +4,7 @@ import edu.pasudo123.board.core.comment.dto.CommentOneRequestDto;
 import edu.pasudo123.board.core.comment.dto.CommentOneResponseDto;
 import edu.pasudo123.board.core.comment.service.CommentCreateService;
 import edu.pasudo123.board.core.comment.service.CommentDeleteService;
+import edu.pasudo123.board.core.comment.service.CommentUpdateService;
 import edu.pasudo123.board.core.config.auth.CurrentUser;
 import edu.pasudo123.board.core.config.auth.CustomOAuth2User;
 import edu.pasudo123.board.core.global.exception.ValidationException;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.transform.OutputKeys;
 
 /**
  * Created by pasudo123 on 2019-08-04
@@ -25,22 +27,38 @@ import javax.validation.Valid;
 public class CommentController {
 
     private final CommentCreateService commentCreateService;
+    private final CommentUpdateService commentUpdateService;
     private final CommentDeleteService commentDeleteService;
 
-    @PostMapping("/comment")
+    @PostMapping("comment")
     public ResponseEntity<CommentOneResponseDto> saveComment(@CurrentUser CustomOAuth2User customOAuth2User,
                                                              @Valid @RequestBody CommentOneRequestDto dto,
-                                                             BindingResult bindingResult) throws ValidationException {
+                                                             BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new ValidationException("Validation Result Failed.", bindingResult);
         }
 
-        return ResponseEntity.ok().body(commentCreateService.addNewComment(dto,customOAuth2User.getUser()));
+        return ResponseEntity.ok().body(commentCreateService.addNewComment(dto, customOAuth2User.getUser()));
     }
 
-    @DeleteMapping("/comment/{commentId}")
-    public void deleteOneById(@PathVariable long commentId){
+    @PatchMapping("comment/{commentId}")
+    public ResponseEntity<CommentOneResponseDto> updateOneById(@PathVariable Long commentId,
+                                                               @Valid @RequestBody CommentOneRequestDto dto,
+                                                               BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException("Validation Result Failed.", bindingResult);
+        }
+
+        return ResponseEntity.ok().body(commentUpdateService.updateOnById(commentId, dto));
+    }
+
+    @DeleteMapping("comment/{commentId}")
+    public ResponseEntity<String> deleteOneById(@PathVariable long commentId) {
+
         commentDeleteService.deleteOneById(commentId);
+
+        return ResponseEntity.ok().body("Delete Success");
     }
 }
