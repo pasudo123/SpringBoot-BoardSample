@@ -1,3 +1,29 @@
+
+---
+## Spring YAML Configuration(test)
+## reference1 : https://www.baeldung.com/spring-yaml
+## reference2 : https://www.baeldung.com/configuration-properties-in-spring-boot
+spring:
+  profiles: test
+name: test-YAML
+environment: test
+servers:
+  - www.test1.com
+  - www.test2.com
+  -
+
+---
+## Spring YAML Configuration(prod)
+spring:
+  profiles: prod
+name: prod-YAML
+environment: prod
+servers:
+  - www.prod1.com
+  - www.prod2.com
+---
+
+
 ---
 ## DB
 spring:
