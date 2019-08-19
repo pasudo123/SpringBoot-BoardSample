@@ -57,7 +57,7 @@ public class UserRepositoryOnArticleTest {
                 .role(Role.USER)
                 .build();
 
-        user.addNewArticle(article);
+        article.setWriterUser(user);
         testEntityManager.persist(user);
 
         User foundUser = userRepository.findByUserRegistrationId(user.getUserRegistrationId()).get();
@@ -87,7 +87,7 @@ public class UserRepositoryOnArticleTest {
                 .role(Role.USER)
                 .build();
 
-        user.addNewArticle(article);
+        article.setWriterUser(user);
         testEntityManager.persist(user);
         testEntityManager.flush();
 
