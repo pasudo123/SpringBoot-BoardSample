@@ -1,6 +1,5 @@
 package edu.pasudo123.board.core.common;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  **/
 @RunWith(SpringRunner.class)
 @JsonTest
-@Slf4j
 public class JsonPojoTest {
 
     @Autowired
