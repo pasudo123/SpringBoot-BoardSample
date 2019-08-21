@@ -1,12 +1,14 @@
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'java'
+    id "com.moowork.node" version "1.3.1"
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.moowork.node"
 
 group = 'edu.pasudo123.board'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.0'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -57,3 +59,12 @@ dependencies {
     compile 'org.modelmapper:modelmapper:2.3.0'
     /** model-mapper end **/
 }
+
+// reference :: https://codar.club/blogs/using-gradle-to-build-the-api-development-framework-of-springboot-vue.js.html
+//task npmBuild(type:NpmTask, dependsOn:npmInstall){
+//    group = 'node'
+//    inputs.file('./frontend/package.json')
+//    inputs.file('./frontend/package-lock.json')
+//    args = ['run', 'build']
+//}
+//jar.dependsOn npmBuild
