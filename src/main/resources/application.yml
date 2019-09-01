@@ -1,39 +1,71 @@
-## Spring YAML Configuration(test)
-## reference1 : https://www.baeldung.com/spring-yaml
-## reference2 : https://www.baeldung.com/configuration-properties-in-spring-boot
-#spring:
-#  profiles: test
-#name: test-YAML
-#environment: test
-#servers:
-#  - www.test1.com
-#  - www.test2.com
+
 ---
-## Spring YAML Configuration(prod)
-#spring:
-#  profiles: prod
-#name: prod-YAML
-#environment: prod
-#servers:
-#  - www.prod1.com
-#  - www.prod2.com
-
-
 spring:
+  profiles:
+    active: prod
+
+---
+## Database
+spring:
+  profiles: prod
   datasource:
-    url: jdbc:mysql://localhost:3306/study?useTimezone=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/study?useSSL=false&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
     username: root
     password: rootpass
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL57Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     generate-ddl: true
     show-sql: true
 
+---
+## Google OAuth2
+spring:
+  profiles: prod
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 763371632947-j0qd1ij5jqivvf5nq5q1p3dd1ss7u6ku.apps.googleusercontent.com
+            client-secret: FpBYQ2-dUuZjg1vfIs4iZRNA
+            redirect-uri: http://localhost:8080/login/oauth2/callback/google
+            scope:
+              - email
+              - profile
 
 ---
+spring:
+  profiles: dev
+server:
+  email: oraedoa@gmail.com
+
+---
+spring:
+  profiles: prod
+server:
+  email: pasudo123@naver.com
+
+###################
+## COMMON
+###################
+---
+## view freemarker
+spring:
+  freemarker:
+    template-loader-path: classpath:/static/templates
+    suffix: .ftl
+
+---
+## logging
+logging:
+  level:
+    edu.pasudo123.board: DEBUG
+
+---
+
 ## DB
 #spring:
 #  h2:
@@ -49,32 +81,3 @@ spring:
 #    properties:
 #      hibernate:
 #        format_sql: true
-
----
-## view freemarker
-spring:
-  freemarker:
-    template-loader-path: classpath:/static/templates
-    suffix: .ftl
-
----
-## logging
-logging:
-  level:
-    #    org.springframework.web: DEBUG
-    edu.pasudo123.board: DEBUG
-
----
-## Google OAuth2
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 763371632947-j0qd1ij5jqivvf5nq5q1p3dd1ss7u6ku.apps.googleusercontent.com
-            client-secret: FpBYQ2-dUuZjg1vfIs4iZRNA
-            redirect-uri: http://localhost:8080/login/oauth2/callback/google
-            scope:
-              - email
-              - profile

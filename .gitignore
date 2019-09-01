@@ -250,5 +250,6 @@ gradle-app.setting
 
 # End of https://www.gitignore.io/api/vue,java,vuejs,maven,gradle,java-web,code-java,jetbrains,jetbrains+iml
 
+# 웹팩 번들링 파일
 # vue webpack build, gitignore
-src/main/resources/static/static/
+# src/main/resources/static/static/
